@@ -28,9 +28,9 @@ public class FileRead {
             fr.close();
             System.out.println("OK");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.println("File not found");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("File not found");
         }
     }
 }
