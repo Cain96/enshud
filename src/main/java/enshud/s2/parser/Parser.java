@@ -9,8 +9,8 @@ public class Parser {
 	 */
 	public static void main(final String[] args) {
 		// normalの確認
-		new Parser().run("data/ts/normal01.ts");
-		new Parser().run("data/ts/normal02.ts");
+		//new Parser().run("data/ts/normal01.ts");
+		//new Parser().run("data/ts/normal02.ts");
 
 		// synerrの確認
 		//new Parser().run("data/ts/synerr01.ts");

@@ -9,6 +9,7 @@ import java.io.BufferedReader;
  */
 public class DeclaredVariable extends Type {
     public BufferedReader checkDeclaredVariable(BufferedReader br) {
+        br = idCheck(br, 21);
         br = idCheck(br, 43);
         while (hasOption(br, 41)) {
             br = idCheck(br, 41);
