@@ -72,7 +72,7 @@ public class CalledVariableExpression extends Core {
 			br = idCheck(br, 13);
 			br = checkFactor(br);
 		} else {
-			System.err.println("NG Line" + lineNumber);
+			System.err.println("Syntax error: line " + lineNumber);
 			System.exit(-1);
 		}
 		return br;

@@ -23,7 +23,7 @@ public class Type extends Number {
             /**標準型のcheck**/
             return br;
         } else if (id != 1) {
-            System.err.println("NG Line" + lineNumber);
+            System.err.println("Syntax error: line " + lineNumber);
             System.exit(-1);
         }
 

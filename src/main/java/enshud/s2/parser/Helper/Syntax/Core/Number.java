@@ -26,12 +26,12 @@ public class Number extends Core {
 			}
 			getElements(line);
 			if (id != 44) {
-				System.err.println("NG Line" + lineNumber);
+				System.err.println("Syntax error: line " + lineNumber);
 				System.exit(-1);
 			}
 		} else if (id != 44) {
 			/**符号なし整数**/
-			System.err.println("NG Line" + lineNumber);
+			System.err.println("Syntax error: line " + lineNumber);
 			System.exit(-1);
 		}
 

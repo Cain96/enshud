@@ -21,7 +21,7 @@ public class Core extends Elements {
         }
         getElements(line);
         if (id != targetID) {
-            System.err.println("NG Line" + lineNumber);
+            System.err.println("Syntax error: line " + lineNumber);
             System.exit(-1);
         }
 
@@ -38,7 +38,7 @@ public class Core extends Elements {
         }
         getElements(line);
         if (!Arrays.asList(targetIdArray).contains(id)) {
-            System.err.println("NG Line" + lineNumber);
+            System.err.println("Syntax error: line " + lineNumber);
             System.exit(-1);
         }
 
