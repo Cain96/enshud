@@ -1,5 +1,8 @@
 package enshud.s1.lexer;
 
+
+import enshud.s1.lexer.Helper.FileReadHelper;
+
 public class Lexer {
 	/**
 	 * サンプルmainメソッド．
@@ -28,7 +31,8 @@ public class Lexer {
 	 */
 	public void run(final String inputFileName, final String outputFileName) {
 
-		// TODO
+		FileReadHelper fileReadHelper = new FileReadHelper();
+		fileReadHelper.fileRead(inputFileName, outputFileName);
 
 	}
 }
