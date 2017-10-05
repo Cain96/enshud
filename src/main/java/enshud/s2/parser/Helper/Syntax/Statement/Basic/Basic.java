@@ -67,7 +67,8 @@ public class Basic extends Core {
             br = idCheck(br, 2);
             br = cs.checkCompoundStatement(br);
         } else {
-            System.err.println("NG Line" + lineNumber);
+            System.err.println("Syntax error: line " + lineNumber);
+            return null;
         }
         return br;
     }

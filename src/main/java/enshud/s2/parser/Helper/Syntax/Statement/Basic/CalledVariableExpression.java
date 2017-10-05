@@ -73,7 +73,7 @@ public class CalledVariableExpression extends Core {
 			br = checkFactor(br);
 		} else {
 			System.err.println("Syntax error: line " + lineNumber);
-			System.exit(-1);
+			return null;
 		}
 		return br;
 	}

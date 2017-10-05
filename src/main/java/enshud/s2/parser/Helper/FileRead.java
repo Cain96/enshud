@@ -20,13 +20,13 @@ public class FileRead {
             SyntaxCheck syntaxCheck = new SyntaxCheck();
 
             String line;
-
-            while ((line = br.readLine()) != null) {
-                br = syntaxCheck.syntaxCheck(line, br);
+            line = br.readLine();
+            br = syntaxCheck.syntaxCheck(line, br);
+            if (br != null) {
+                br.close();
+                fr.close();
+                System.out.println("OK");
             }
-            br.close();
-            fr.close();
-            System.out.println("OK");
         } catch (FileNotFoundException e) {
             System.err.println("File not found");
         } catch (IOException e) {

@@ -18,37 +18,41 @@ public class Compound extends Core {
 
     public BufferedReader checkCompoundStatement(BufferedReader br) {
         /**複合文のcheck**/
-        br = idCheck(br, 2);
-        br = statementChecker(br);
-        while (hasOption(br, 37)) {
-            br = idCheck(br, 37);
+        if (br != null) {
+            br = idCheck(br, 2);
             br = statementChecker(br);
+            while (hasOption(br, 37)) {
+                br = idCheck(br, 37);
+                br = statementChecker(br);
+            }
+            br = idCheck(br, 8);
         }
-        br = idCheck(br, 8);
         return br;
     }
 
     private BufferedReader statementChecker(BufferedReader br) {
         /**文のcheck**/
-        if (hasOption(br, 10)) {
-            /**if分のcheck**/
-            br = idCheck(br, 10);
-            br = basic.calledVariableExpression.checkExpression(br);
-            br = idCheck(br, 19);
-            br = checkCompoundStatement(br);
-            if (hasOption(br, 7)) {
-                br = idCheck(br, 7);
+        if (br != null) {
+            if (hasOption(br, 10)) {
+                /**if分のcheck**/
+                br = idCheck(br, 10);
+                br = basic.calledVariableExpression.checkExpression(br);
+                br = idCheck(br, 19);
                 br = checkCompoundStatement(br);
+                if (hasOption(br, 7)) {
+                    br = idCheck(br, 7);
+                    br = checkCompoundStatement(br);
+                }
+            } else if (hasOption(br, 22)) {
+                /**while分のcheck**/
+                br = idCheck(br, 22);
+                br = basic.calledVariableExpression.checkExpression(br);
+                br = idCheck(br, 6);
+                br = checkCompoundStatement(br);
+            } else {
+                /**基本文のcheck**/
+                br = basic.basicStatementChecker(br);
             }
-        } else if (hasOption(br, 22)) {
-            /**while分のcheck**/
-            br = idCheck(br, 22);
-            br = basic.calledVariableExpression.checkExpression(br);
-            br = idCheck(br, 6);
-            br = checkCompoundStatement(br);
-        } else {
-            /**基本文のcheck**/
-            br = basic.basicStatementChecker(br);
         }
         return br;
     }

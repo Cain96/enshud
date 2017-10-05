@@ -13,29 +13,30 @@ public class Type extends Number {
         /**型のcheck**/
         String line = null;
 
-        try {
-            line = br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        getElements(line);
-        if (Arrays.asList(new Integer[]{3, 4, 11}).contains(id)) {
-            /**標準型のcheck**/
-            return br;
-        } else if (id != 1) {
-            System.err.println("Syntax error: line " + lineNumber);
-            System.exit(-1);
-        }
+        if (br != null) {
+            try {
+                line = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            getElements(line);
+            if (Arrays.asList(new Integer[]{3, 4, 11}).contains(id)) {
+                /**標準型のcheck**/
+                return br;
+            } else if (id != 1) {
+                System.err.println("Syntax error: line " + lineNumber);
+                return null;
+            }
 
-        /**配列型のcheck**/
-        br = idCheck(br, 35);
-        br = numberCheck(br);
-        br = idCheck(br, 39);
-        br = numberCheck(br);
-        br = idCheck(br, 36);
-        br = idCheck(br, 14);
-        br = idCheck(br, new Integer[]{3, 4, 11});
-
+            /**配列型のcheck**/
+            br = idCheck(br, 35);
+            br = numberCheck(br);
+            br = idCheck(br, 39);
+            br = numberCheck(br);
+            br = idCheck(br, 36);
+            br = idCheck(br, 14);
+            br = idCheck(br, new Integer[]{3, 4, 11});
+        }
         return br;
     }
 }

@@ -34,24 +34,27 @@ public class SyntaxCheck extends Core {
         if (id == 17) {
             br = program.checkProgram(br);
         } else {
-            System.err.println("NG Line" + lineNumber);
-            System.exit(-1);
+            System.err.println("Syntax error: line " + lineNumber);
+            return null;
         }
 
         /** 変数宣言のcheck **/
-        if (hasOption(br, 21)) {
+        if (hasOption(br, 21) && (br != null)) {
             br = declaredVariable.checkDeclaredVariable(br);
         }
 
         /** 副プログラムのcheck **/
-        while (hasOption(br, 16)) {
+        while (hasOption(br, 16) && (br != null)) {
             br = procedure.checkProcedure(br);
         }
 
         /** 複合文のcheck **/
-        br = compoundStatement.checkCompoundStatement(br);
-
-        br = idCheck(br, 42);
+        if (br != null) {
+            br = compoundStatement.checkCompoundStatement(br);
+        }
+        if (br != null) {
+            br = idCheck(br, 42);
+        }
 
         return br;
     }
