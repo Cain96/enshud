@@ -1,5 +1,10 @@
 package enshud.s0.trial;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
+
 public class Trial {
 	/**
 	 * サンプルmainメソッド．
@@ -25,8 +30,22 @@ public class Trial {
 	 * @param inputFileName 入力pascalファイル名
 	 */
 	public void run(final String inputFileName) {
-
-		// TODO
+		FileReader fr = null;
+		BufferedReader br = null;
+		int lineNumber = 0;
+		try {
+			fr = new FileReader(inputFileName);
+			br = new BufferedReader(fr);
+			while ((br.readLine()) != null) {
+				lineNumber++;
+			}
+		} catch (FileNotFoundException e) {
+			System.err.println("File not found");
+		} catch (IOException e) {
+			System.err.println("File not found");
+		}
+		
+		System.out.println(lineNumber);
 
 	}
 }
