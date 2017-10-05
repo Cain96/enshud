@@ -38,20 +38,14 @@ public class FileReadHelper {
                 separate.separateLine(line, lineNumber, pw);
                 lineNumber++;
             }
+            System.out.println("OK");
             pw.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
             br.close();
             fr.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found");
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+            System.err.println("File not found");
         }
     }
 }
