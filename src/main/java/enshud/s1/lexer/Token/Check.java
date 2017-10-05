@@ -16,7 +16,7 @@ public class Check {
 			return 3;
 		} else if (kwargs.equals("char")) {
 			return 4;
-		} else if (kwargs.equals("div")) {
+		} else if (kwargs.equals("div") || kwargs.equals("/")) {
 			return 5;
 		} else if (kwargs.equals("do")) {
 			return 6;
