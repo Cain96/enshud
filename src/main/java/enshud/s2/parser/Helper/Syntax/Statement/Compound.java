@@ -48,7 +48,7 @@ public class Compound extends Core {
                 br = idCheck(br, 22);
                 br = basic.calledVariableExpression.checkExpression(br);
                 br = idCheck(br, 6);
-                br = checkCompoundStatement(br);
+                br = basic.basicStatementChecker(br);
             } else {
                 /**基本文のcheck**/
                 br = basic.basicStatementChecker(br);

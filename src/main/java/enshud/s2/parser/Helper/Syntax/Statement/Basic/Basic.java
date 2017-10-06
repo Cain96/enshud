@@ -64,9 +64,8 @@ public class Basic extends Core {
         } else if (hasOption(br, 2)) {
             /**複合文のcheck**/
             Compound cs = new Compound();
-            br = idCheck(br, 2);
             br = cs.checkCompoundStatement(br);
-        } else {
+        } else if (br != null) {
             System.err.println("Syntax error: line " + lineNumber);
             return null;
         }

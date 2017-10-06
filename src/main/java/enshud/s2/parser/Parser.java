@@ -9,12 +9,12 @@ public class Parser {
 	 */
 	public static void main(final String[] args) {
 		// normalの確認
-		new Parser().run("data/ts/normal01.ts");
-		new Parser().run("data/ts/normal02.ts");
+		//new Parser().run("data/ts/normal01.ts");
+		//new Parser().run("data/ts/normal02.ts");
 
 		// synerrの確認
-		new Parser().run("data/ts/synerr03.ts");
-		new Parser().run("data/ts/synerr02.ts");
+		//new Parser().run("data/ts/synerr03.ts");
+		new Parser().run("data/ts/synerr05.ts");
 	}
 
 	/**
