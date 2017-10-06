@@ -1,5 +1,7 @@
 package enshud.s3.checker;
 
+import enshud.s3.checker.Helper.FileRead;
+
 public class Checker {
 	/**
 	 * サンプルmainメソッド．
@@ -37,7 +39,12 @@ public class Checker {
 	 */
 	public void run(final String inputFileName) {
 
-		// TODO
+		if (!inputFileName.endsWith(".ts")) {    //拡張子の識別
+			System.err.println("Extension Error");
+		}
+
+		FileRead fileRead = new FileRead();
+		fileRead.fileRead(inputFileName);
 
 	}
 }
