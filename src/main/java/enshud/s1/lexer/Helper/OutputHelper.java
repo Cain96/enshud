@@ -19,7 +19,7 @@ public class OutputHelper {
 	}
 
 	public void outputToken(String word, int lineNumber, PrintWriter pw) {
-		int id = check.checkId(word);
+		int id = check.getId(word);
 		String tokenName = tokenList.getName(id);
 		pw.println(word + "\t" + tokenName + "\t" + id + "\t" + lineNumber);
 	}
