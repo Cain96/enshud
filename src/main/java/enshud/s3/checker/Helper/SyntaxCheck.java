@@ -22,8 +22,8 @@ public class SyntaxCheck extends Core {
     public SyntaxCheck() {
         this.program = new Program();
         this.declaredVariable = new DeclaredVariable();
-        this.procedure = new Procedure();
-        this.compoundStatement = new Compound();
+        this.procedure = new Procedure(declaredVariable.declared);
+        this.compoundStatement = new Compound(declaredVariable.declared);
     }
 
     BufferedReader syntaxCheck(String line, BufferedReader br) {

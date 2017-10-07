@@ -1,6 +1,8 @@
 package enshud.s3.checker.Helper.Syntax.Statement.Basic;
 
 
+import enshud.s3.checker.Helper.Semantics.Variable.Called;
+import enshud.s3.checker.Helper.Semantics.Variable.Declared;
 import enshud.s3.checker.Helper.Syntax.Core.Core;
 import enshud.s3.checker.Helper.Syntax.Statement.Compound;
 
@@ -11,14 +13,20 @@ import java.io.BufferedReader;
  */
 public class Basic extends Core {
     public CalledVariableExpression calledVariableExpression;
+    public Declared declared;
 
-    public Basic() {
-        this.calledVariableExpression = new CalledVariableExpression();
+    public Basic(Declared declared) {
+        this.calledVariableExpression = new CalledVariableExpression(declared);
+        this.declared = declared;
     }
 
     public BufferedReader basicStatementChecker(BufferedReader br) {
         if (hasOption(br, 43)) {
             br = idCheck(br, 43);
+            String variableName = string;
+            int variableLine = lineNumber;
+            br = calledVariableExpression.checkCalledVariable(br, variableName, variableLine);
+
             if (hasOption(br, 33)) {
                 /**手続き呼び出し文のオプションcheck**/
                 br = idCheck(br, 33);
@@ -28,13 +36,11 @@ public class Basic extends Core {
                     br = calledVariableExpression.checkExpression(br);
                 }
                 br = idCheck(br, 34);
-            } else {
+            } else if (hasOption(br, 40)) {
                 /**代入文のcheck**/
-                br = calledVariableExpression.checkCalledVariable(br);
-                if (hasOption(br, 40)) {
-                    br = idCheck(br, 40);
-                    br = calledVariableExpression.checkExpression(br);
-                }
+                br = calledVariableExpression.checkCalledVariable(br, variableName, variableLine);
+                br = idCheck(br, 40);
+                br = calledVariableExpression.checkExpression(br);
             }
         } else if (hasOption(br, 18)) {
             /**入力文のcheck**/
@@ -42,10 +48,10 @@ public class Basic extends Core {
             if (hasOption(br, 33)) {
                 br = idCheck(br, 33);
                 br = idCheck(br, 43);
-                br = calledVariableExpression.checkCalledVariable(br);
+                br = calledVariableExpression.checkCalledVariable(br, string, lineNumber);
                 while (hasOption(br, 41)) {
                     br = idCheck(br, 41);
-                    br = calledVariableExpression.checkCalledVariable(br);
+                    br = calledVariableExpression.checkCalledVariable(br, string, lineNumber);
                 }
                 br = idCheck(br, 34);
             }
@@ -63,7 +69,7 @@ public class Basic extends Core {
             }
         } else if (hasOption(br, 2)) {
             /**複合文のcheck**/
-            Compound cs = new Compound();
+            Compound cs = new Compound(declared);
             br = cs.checkCompoundStatement(br);
         } else if (br != null) {
             System.err.println("Syntax error: line " + lineNumber);

@@ -1,6 +1,8 @@
 package enshud.s3.checker.Helper.Syntax.Statement;
 
 
+import enshud.s3.checker.Helper.Semantics.Variable.Called;
+import enshud.s3.checker.Helper.Semantics.Variable.Declared;
 import enshud.s3.checker.Helper.Syntax.Core.Core;
 import enshud.s3.checker.Helper.Syntax.Statement.Basic.Basic;
 
@@ -12,8 +14,8 @@ import java.io.BufferedReader;
 public class Compound extends Core {
     private Basic basic;
 
-    public Compound() {
-        this.basic = new Basic();
+    public Compound(Declared declared) {
+        this.basic = new Basic(declared);
     }
 
     public BufferedReader checkCompoundStatement(BufferedReader br) {

@@ -7,36 +7,38 @@ import java.io.IOException;
  * Created by Cain96 on 2017/09/30.
  */
 public class Number extends Core {
+    int min, max;
 
-    BufferedReader numberCheck(BufferedReader br) {
+    BufferedReader numberCheck(BufferedReader br, boolean flag) {
         /**整数のcheck**/
-        String line = null;
+        /**flag = true : min**/
+        /**flag = false : max**/
 
-        if (br != null) {
-            try {
-                line = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            getElements(line);
-            if (id == 30 || id == 31) {
-                /**符号付き整数**/
-                try {
-                    line = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                getElements(line);
-                if (id != 44) {
-                    System.err.println("Syntax error: line " + lineNumber);
-                    return null;
-                }
-            } else if (id != 44) {
-                /**符号なし整数**/
-                System.err.println("Syntax error: line " + lineNumber);
-                return null;
+        int num;
+        boolean minus = false;
+
+        if (hasOption(br, new Integer[]{30, 31})) {
+            /**符号付き整数**/
+            br = idCheck(br, new Integer[]{30, 31});
+            if (string.equals("-")) {
+                minus = true;
             }
         }
+        /**符号なし整数**/
+        if((br = idCheck(br, 44)) != null) {
+
+            num = Integer.parseInt(string);
+
+            if (minus) {
+                num = -num;
+            }
+            if (flag) {
+                min = num;
+            } else {
+                max = num;
+            }
+        }
+
         return br;
     }
 }
