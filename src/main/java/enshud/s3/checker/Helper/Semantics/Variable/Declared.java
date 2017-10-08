@@ -36,6 +36,7 @@ public class Declared {
         for (Map.Entry<Integer, ArrayList<Array>> entry : declaredArrays.entrySet()){
             entry.getValue().addAll(declared.declaredArrays.get(entry.getKey()));
         }
+        declaredFunctions.addAll(declared.declaredFunctions);
     }
 
     public BufferedReader addVariables(BufferedReader br, int id, ArrayList<String> newVariables, int lineNumber) {

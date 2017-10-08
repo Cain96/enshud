@@ -28,7 +28,6 @@ public class Procedure extends Type {
         br = idCheck(br, 16);
         br = idCheck(br, 43);
         br = declared.addFunction(br, string, lineNumber);
-        br = declaredVariable.declared.addFunction(br, string, lineNumber);
         if (hasOption(br, 33)) {
             br = idCheck(br, 33);
             br = idCheck(br, 43);
