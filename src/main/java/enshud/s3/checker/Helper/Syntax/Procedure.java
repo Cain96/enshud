@@ -14,12 +14,11 @@ import java.util.ArrayList;
 public class Procedure extends Type {
     DeclaredVariable declaredVariable;
     Compound compoundStatement;
-    Declared mainDeclared;
+    Declared declared;
 
     public Procedure(Declared declared) {
         this.declaredVariable = new DeclaredVariable();
-        this.mainDeclared = declared;
-        declaredVariable.declared.setDeclared(declared);
+        this.declared = declared;
         this.compoundStatement = new Compound(declaredVariable.declared);
     }
 
@@ -28,8 +27,8 @@ public class Procedure extends Type {
 
         br = idCheck(br, 16);
         br = idCheck(br, 43);
-        mainDeclared.addFunction(string);
-        declaredVariable.declared.addFunction(string);
+        br = declared.addFunction(br, string, lineNumber);
+        br = declaredVariable.declared.addFunction(br, string, lineNumber);
         if (hasOption(br, 33)) {
             br = idCheck(br, 33);
             br = idCheck(br, 43);
@@ -63,6 +62,8 @@ public class Procedure extends Type {
         if (hasOption(br, 21)) {
             br = declaredVariable.checkDeclaredVariable(br);
         }
+
+        declaredVariable.declared.setDeclared(declared);
 
         /** 複合文のcheck **/
         br = compoundStatement.checkCompoundStatement(br);

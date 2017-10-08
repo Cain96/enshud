@@ -19,7 +19,7 @@ public class Type extends Number {
             if (hasOption(br, new Integer[]{3, 4, 11})) {
                 /**標準型のcheck**/
                 br = idCheck(br, new Integer[]{3, 4, 11});
-                declared.addVariables(id, variables);
+                br = declared.addVariables(br, id, variables, lineNumber);
                 return br;
             } else if (!hasOption(br, 1)) {
                 System.err.println("Syntax error: line " + lineNumber);
@@ -35,7 +35,7 @@ public class Type extends Number {
             br = idCheck(br, 36);
             br = idCheck(br, 14);
             br = idCheck(br, new Integer[]{3, 4, 11});
-            declared.addArray(id, new Array(variables.get(0), min, max));
+            br = declared.addArray(br, id, new Array(variables.get(0), min, max), lineNumber);
         }
         return br;
     }

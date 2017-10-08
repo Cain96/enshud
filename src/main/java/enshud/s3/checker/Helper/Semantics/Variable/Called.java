@@ -28,10 +28,8 @@ public class Called {
 
     private boolean hasCalledVariable(String element) {
         for (ArrayList<String> variables : declaredVariables.values()) {
-            for (String variable : variables) {
-                if (element.equals(variable)) {
-                    return true;
-                }
+            if (variables.contains(element)) {
+                return true;
             }
         }
         for (ArrayList<Array> variables : declaredArrays.values()) {
@@ -41,10 +39,8 @@ public class Called {
                 }
             }
         }
-        for (String variable : declaredFunctions) {
-            if (variable.equals(element)) {
-                return true;
-            }
+        if (declaredFunctions.contains(element)) {
+            return true;
         }
         return false;
     }

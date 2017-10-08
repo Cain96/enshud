@@ -22,7 +22,6 @@ public class SyntaxCheck extends Core {
     public SyntaxCheck() {
         this.program = new Program();
         this.declaredVariable = new DeclaredVariable();
-        this.procedure = new Procedure(declaredVariable.declared);
         this.compoundStatement = new Compound(declaredVariable.declared);
     }
 
@@ -45,7 +44,7 @@ public class SyntaxCheck extends Core {
 
         /** 副プログラムのcheck **/
         while (hasOption(br, 16) && (br != null)) {
-            br = procedure.checkProcedure(br);
+            br = new Procedure(declaredVariable.declared).checkProcedure(br);
         }
 
         /** 複合文のcheck **/
