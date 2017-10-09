@@ -8,8 +8,7 @@ import java.util.HashMap;
 public class TokenList {
 	private HashMap<Integer, String> list = new HashMap<Integer, String>();
 
-	public void setList() {
-
+	public TokenList() {
 		list.put(0, "SAND");
 		list.put(1, "SARRAY");
 		list.put(2, "SBEGIN");
