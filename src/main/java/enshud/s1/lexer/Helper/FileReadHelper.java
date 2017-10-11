@@ -32,7 +32,6 @@ public class FileReadHelper {
             String line;
             int lineNumber = 1;
             TokenList tokenList = new TokenList();
-            tokenList.setList();
             Separate separate = new Separate(new OutputHelper(tokenList, new Check()));
             while ((line = br.readLine()) != null) {
                 separate.separateLine(line, lineNumber, pw);
