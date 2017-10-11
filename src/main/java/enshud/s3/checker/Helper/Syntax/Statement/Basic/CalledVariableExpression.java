@@ -33,6 +33,10 @@ public class CalledVariableExpression extends Core {
             if (hasOption(br, 35)) {
                 br = idCheck(br, 35);
                 br = checkExpression(br);
+                if (!called.checkArrayIndex(val)){
+                    System.err.println("Semantic error: line " + lineNumber);
+                    return null;
+                }
                 br = idCheck(br, 36);
             } else {
                 System.err.println("Semantic error: line " + lineNumber);
@@ -52,6 +56,10 @@ public class CalledVariableExpression extends Core {
         if (hasOption(br, 35)) {
             br = idCheck(br, 35);
             br = checkExpression(br);
+            if (!called.checkArrayIndex(val)){
+                System.err.println("Semantic error: line " + lineNumber);
+                return null;
+            }
             br = idCheck(br, 36);
         }
         return br;

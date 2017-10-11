@@ -1,5 +1,7 @@
 package enshud.s3.checker.Helper.Semantics.Variable;
 
+import enshud.s1.lexer.Token.Check;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +42,14 @@ public class Called {
         }
         System.err.println("Semantic error: line " + lineNumber);
         return -1;
+    }
+
+    public boolean checkArrayIndex(int id){
+        final int INT = 11;
+        if (id == INT){
+            return true;
+        }
+        return false;
     }
 
 }
