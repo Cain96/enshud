@@ -1,7 +1,5 @@
 package enshud.s3.checker.Helper.Semantics.Variable;
 
-import enshud.s3.checker.Helper.Semantics.Variable.Array;
-
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,10 +28,10 @@ public class Declared {
     }
 
     public void setDeclared(Declared declared) {
-        for (Map.Entry<Integer, ArrayList<String>> entry : declaredVariables.entrySet()){
+        for (Map.Entry<Integer, ArrayList<String>> entry : declaredVariables.entrySet()) {
             entry.getValue().addAll(declared.declaredVariables.get(entry.getKey()));
         }
-        for (Map.Entry<Integer, ArrayList<Array>> entry : declaredArrays.entrySet()){
+        for (Map.Entry<Integer, ArrayList<Array>> entry : declaredArrays.entrySet()) {
             entry.getValue().addAll(declared.declaredArrays.get(entry.getKey()));
         }
         declaredFunctions.addAll(declared.declaredFunctions);

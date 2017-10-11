@@ -9,7 +9,7 @@ public class Checker {
 	 */
 	public static void main(final String[] args) {
 		// normalの確認
-		new Checker().run("data/ts/normal04.ts");
+		new Checker().run("data/ts/normal01.ts");
 		//new Checker().run("data/ts/normal05.ts");
 
 		// synerrの確認

@@ -2,6 +2,7 @@ package enshud.s3.checker.Helper.Semantics.Variable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Cain96 on 2017/09/30.
@@ -18,30 +19,24 @@ public class Called {
         this.declaredFunctions = declared.declaredFunctions;
     }
 
-    public boolean semanticCheckCalledVariable(String variable, int lineNumber) {
-        if (!hasCalledVariable(variable)) {
-            System.err.println("Semantic error: line " + lineNumber);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean hasCalledVariable(String element) {
-        for (ArrayList<String> variables : declaredVariables.values()) {
-            if (variables.contains(element)) {
-                return true;
+    public int semanticCheckCalledVariable(String variable, int lineNumber) {
+        for (Map.Entry<Integer, ArrayList<String>> entry : declaredVariables.entrySet()) {
+            if (entry.getValue().contains(variable)) {
+                return entry.getKey();
             }
         }
-        for (ArrayList<Array> variables : declaredArrays.values()) {
-            for (Array variable : variables) {
-                if (variable.getName().equals(element)) {
-                    return true;
+        for (Map.Entry<Integer, ArrayList<Array>> entry : declaredArrays.entrySet()) {
+            for (Array array : entry.getValue()) {
+                if (array.getName().equals(variable)) {
+                    return entry.getKey();
                 }
             }
         }
-        if (declaredFunctions.contains(element)) {
-            return true;
+        if (declaredFunctions.contains(variable)) {
+            return 43;
         }
-        return false;
+        System.err.println("Semantic error: line " + lineNumber);
+        return -1;
     }
+
 }
