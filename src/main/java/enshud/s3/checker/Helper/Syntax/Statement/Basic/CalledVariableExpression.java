@@ -15,7 +15,7 @@ public class CalledVariableExpression extends Core {
 
     Called called;
     Operator operator;
-    int val;
+    public int val;
 
     public CalledVariableExpression(Declared declared) {
         this.called = new Called(declared);

@@ -1,6 +1,7 @@
 package enshud.s3.checker.Helper.Syntax.Statement;
 
 
+import enshud.s3.checker.Helper.Semantics.Expression.Expression;
 import enshud.s3.checker.Helper.Semantics.Variable.Declared;
 import enshud.s3.checker.Helper.Syntax.Core.Core;
 import enshud.s3.checker.Helper.Syntax.Statement.Basic.Basic;
@@ -12,9 +13,11 @@ import java.io.BufferedReader;
  */
 public class Compound extends Core {
     private Basic basic;
+    private Expression expression;
 
     public Compound(Declared declared) {
         this.basic = new Basic(declared);
+        this.expression = new Expression();
     }
 
     public BufferedReader checkCompoundStatement(BufferedReader br) {
@@ -38,6 +41,10 @@ public class Compound extends Core {
                 /**if分のcheck**/
                 br = idCheck(br, 10);
                 br = basic.calledVariableExpression.checkExpression(br);
+                if (!expression.checkBool(basic.calledVariableExpression.val)){
+                    System.err.println("Semantic error: line " + lineNumber);
+                    return null;
+                }
                 br = idCheck(br, 19);
                 br = checkCompoundStatement(br);
                 if (hasOption(br, 7)) {
@@ -48,6 +55,10 @@ public class Compound extends Core {
                 /**while分のcheck**/
                 br = idCheck(br, 22);
                 br = basic.calledVariableExpression.checkExpression(br);
+                if (!expression.checkBool(basic.calledVariableExpression.val)){
+                    System.err.println("Semantic error: line " + lineNumber);
+                    return null;
+                }
                 br = idCheck(br, 6);
                 br = basic.basicStatementChecker(br);
             } else {
