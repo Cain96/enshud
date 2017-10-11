@@ -1,7 +1,5 @@
 package enshud.s3.checker.Helper.Semantics.Operator;
 
-import enshud.s3.checker.Helper.Semantics.Variable.Declared;
-
 import java.util.Arrays;
 import java.util.List;
 

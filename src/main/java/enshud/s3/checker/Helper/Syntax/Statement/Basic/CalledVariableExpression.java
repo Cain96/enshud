@@ -5,7 +5,6 @@ import enshud.s3.checker.Helper.Semantics.Operator.Operator;
 import enshud.s3.checker.Helper.Semantics.Variable.Called;
 import enshud.s3.checker.Helper.Semantics.Variable.Declared;
 import enshud.s3.checker.Helper.Syntax.Core.Core;
-import enshud.s3.checker.Helper.Syntax.Elements.Elements;
 
 import java.io.BufferedReader;
 

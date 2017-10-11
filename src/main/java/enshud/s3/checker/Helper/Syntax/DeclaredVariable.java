@@ -1,6 +1,5 @@
 package enshud.s3.checker.Helper.Syntax;
 
-import enshud.s3.checker.Helper.Semantics.Variable.Array;
 import enshud.s3.checker.Helper.Semantics.Variable.Declared;
 import enshud.s3.checker.Helper.Syntax.Core.Type;
 

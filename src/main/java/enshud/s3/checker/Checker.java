@@ -18,7 +18,7 @@ public class Checker {
 
 		// semerrの確認
 		//new Checker().run("data/ts/semerr01.ts");
-		//new Checker().run("data/ts/semerr02.ts");
+		//new Checker().run("data/ts/semerr06.ts");
 	}
 
 	/**

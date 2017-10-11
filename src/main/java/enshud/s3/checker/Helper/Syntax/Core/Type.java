@@ -4,9 +4,7 @@ import enshud.s3.checker.Helper.Semantics.Variable.Array;
 import enshud.s3.checker.Helper.Semantics.Variable.Declared;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Cain96 on 2017/09/30.
