@@ -34,7 +34,7 @@ public class Operator {
         if (prev != null && follow != null) {
             if (arithmeticList.contains(mid) && arithmetic.check(prev, follow, lineNumber)) {
                 return "INT";
-            } else if (logicList.contains(mid)) {
+            } else if (logicList.contains(mid) && logic.check(prev, follow, lineNumber)) {
                 return "BOOL";
             } else if (relationList.contains(mid)) {
                 return "BOOL";

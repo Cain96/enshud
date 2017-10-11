@@ -49,6 +49,7 @@ public class CalledVariableExpression extends Core {
                 return null;
             }
         }
+        val = prev;
         return br;
     }
 
