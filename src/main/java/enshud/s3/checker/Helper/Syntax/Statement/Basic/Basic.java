@@ -23,7 +23,7 @@ public class Basic extends Core {
             br = idCheck(br, 43);
             String variableName = string;
             int variableLine = lineNumber;
-            br = calledVariableExpression.checkCalledVariable(br, variableName, variableLine);
+            br = calledVariableExpression.checkAssignedVariable(br, variableName, variableLine);
 
             if (hasOption(br, 33)) {
                 /**手続き呼び出し文のオプションcheck**/
@@ -36,7 +36,6 @@ public class Basic extends Core {
                 br = idCheck(br, 34);
             } else if (hasOption(br, 40)) {
                 /**代入文のcheck**/
-                br = calledVariableExpression.checkCalledVariable(br, variableName, variableLine);
                 int prev = calledVariableExpression.val;
                 br = idCheck(br, 40);
                 int mid = id;

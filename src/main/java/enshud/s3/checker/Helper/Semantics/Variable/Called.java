@@ -21,6 +21,7 @@ public class Called {
     }
 
     public int semanticCheckCalledVariable(String variable, int lineNumber) {
+        isArray = false;
         for (Map.Entry<Integer, ArrayList<String>> entry : declaredVariables.entrySet()) {
             if (entry.getValue().contains(variable)) {
                 return entry.getKey();
@@ -29,6 +30,7 @@ public class Called {
         for (Map.Entry<Integer, ArrayList<Array>> entry : declaredArrays.entrySet()) {
             for (Array array : entry.getValue()) {
                 if (array.getName().equals(variable)) {
+                    isArray = true;
                     return entry.getKey();
                 }
             }

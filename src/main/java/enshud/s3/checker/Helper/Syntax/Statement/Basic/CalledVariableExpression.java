@@ -14,16 +14,38 @@ import java.io.BufferedReader;
 public class CalledVariableExpression extends Core {
 
     Called called;
-    public Operator operator;
-    public int val;
+    Operator operator;
+    int val;
 
     public CalledVariableExpression(Declared declared) {
         this.called = new Called(declared);
         this.operator = new Operator();
     }
 
+    BufferedReader checkAssignedVariable(BufferedReader br, String variable, int lineNumber) {
+        /**代入文の変数check***/
+
+        if ((val = called.semanticCheckCalledVariable(variable, lineNumber)) < 0) {
+            return null;
+        }
+        if (called.isArray) {
+            int valTmp = val;
+            if (hasOption(br, 35)) {
+                br = idCheck(br, 35);
+                br = checkExpression(br);
+                br = idCheck(br, 36);
+            } else {
+                System.err.println("Semantic error: line " + lineNumber);
+                return null;
+            }
+            val = valTmp;
+        }
+        return br;
+    }
+
     BufferedReader checkCalledVariable(BufferedReader br, String variable, int lineNumber) {
         /**変数のcheck**/
+
         if ((val = called.semanticCheckCalledVariable(variable, lineNumber)) < 0) {
             return null;
         }
@@ -114,7 +136,7 @@ public class CalledVariableExpression extends Core {
             /**"not" 因子**/
             br = idCheck(br, 13);
             br = checkFactor(br);
-        } else {
+        } else if (br != null) {
             System.err.println("Syntax error: line " + lineNumber);
             return null;
         }
