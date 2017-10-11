@@ -15,17 +15,17 @@ import java.io.BufferedReader;
 public class CalledVariableExpression extends Core {
 
     Called called;
-    Operator operator;
-    private String val;
+    public Operator operator;
+    public int val;
 
     public CalledVariableExpression(Declared declared) {
         this.called = new Called(declared);
-        this.operator = new Operator(declared);
+        this.operator = new Operator();
     }
 
     BufferedReader checkCalledVariable(BufferedReader br, String variable, int lineNumber) {
         /**変数のcheck**/
-        if (called.semanticCheckCalledVariable(variable, lineNumber) < 0) {
+        if ((val = called.semanticCheckCalledVariable(variable, lineNumber)) < 0) {
             return null;
         }
         if (hasOption(br, 35)) {
@@ -39,13 +39,13 @@ public class CalledVariableExpression extends Core {
     public BufferedReader checkExpression(BufferedReader br) {
         /**式のcheck**/
         br = checkSimpleExpression(br);
-        String prev = val;
+        int prev = val;
         while (hasOption(br, new Integer[]{24, 25, 26, 27, 28, 29})) {/**関係演算子**/
             br = idCheck(br, new Integer[]{24, 25, 26, 27, 28, 29});
             int mid = id;
             br = checkSimpleExpression(br);
-            String follow = val;
-            if ((prev = operator.check(prev, mid, follow, lineNumber)).equals("ERROR")) {
+            int follow = val;
+            if ((prev = operator.check(prev, mid, follow, lineNumber)) < 0) {
                 return null;
             }
         }
@@ -59,13 +59,13 @@ public class CalledVariableExpression extends Core {
             br = idCheck(br, new Integer[]{30, 31});
         }
         br = checkTerm(br);
-        String prev = val;
+        int prev = val;
         while (hasOption(br, new Integer[]{15, 30, 31})) {/**加法演算子**/
             br = idCheck(br, new Integer[]{15, 30, 31});
             int mid = id;
             br = checkTerm(br);
-            String follow = val;
-            if ((prev = operator.check(prev, mid, follow, lineNumber)).equals("ERROR")) {
+            int follow = val;
+            if ((prev = operator.check(prev, mid, follow, lineNumber)) < 0) {
                 return null;
             }
         }
@@ -76,13 +76,13 @@ public class CalledVariableExpression extends Core {
     private BufferedReader checkTerm(BufferedReader br) {
         /**項のcheck**/
         br = checkFactor(br);
-        String prev = val;
+        int prev = val;
         while (hasOption(br, new Integer[]{0, 5, 12, 32})) {/**乗法演算子**/
             br = idCheck(br, new Integer[]{0, 5, 12, 32});
             int mid = id;
             br = checkFactor(br);
-            String follow = val;
-            if ((prev = operator.check(prev, mid, follow, lineNumber)).equals("ERROR")) {
+            int follow = val;
+            if ((prev = operator.check(prev, mid, follow, lineNumber)) < 0) {
                 return null;
             }
         }
@@ -95,12 +95,17 @@ public class CalledVariableExpression extends Core {
         if (hasOption(br, 43)) {
             /**変数**/
             br = idCheck(br, 43);
-            val = string;
             br = checkCalledVariable(br, string, lineNumber);
         } else if (hasOption(br, new Integer[]{9, 20, 44, 45})) {
             /**定数**/
             br = idCheck(br, new Integer[]{9, 20, 44, 45});
-            val = string;
+            if (id == 44) {
+                val = 11;
+            } else if (id == 45) {
+                val = 4;
+            } else {
+                val = 3;
+            }
         } else if (hasOption(br, 33)) {
             /**"("式")"**/
             br = idCheck(br, 33);

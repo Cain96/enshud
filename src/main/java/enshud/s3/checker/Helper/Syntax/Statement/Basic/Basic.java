@@ -39,8 +39,15 @@ public class Basic extends Core {
             } else if (hasOption(br, 40)) {
                 /**代入文のcheck**/
                 br = calledVariableExpression.checkCalledVariable(br, variableName, variableLine);
+                int prev = calledVariableExpression.val;
                 br = idCheck(br, 40);
+                int mid = id;
                 br = calledVariableExpression.checkExpression(br);
+                int follow = calledVariableExpression.val;
+                if (calledVariableExpression.operator.check(prev, mid, follow, lineNumber) < 0) {
+                    System.err.println("Semantic error: line " + lineNumber);
+                    return null;
+                }
             }
         } else if (hasOption(br, 18)) {
             /**入力文のcheck**/
