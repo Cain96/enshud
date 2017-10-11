@@ -8,9 +8,10 @@ import java.util.Map;
  * Created by Cain96 on 2017/09/30.
  */
 public class Called {
-    public HashMap<Integer, ArrayList<String>> declaredVariables;
-    public HashMap<Integer, ArrayList<Array>> declaredArrays;
-    public ArrayList<String> declaredFunctions;
+    private HashMap<Integer, ArrayList<String>> declaredVariables;
+    private HashMap<Integer, ArrayList<Array>> declaredArrays;
+    private ArrayList<String> declaredFunctions;
+    public boolean isArray;
 
 
     public Called(Declared declared) {

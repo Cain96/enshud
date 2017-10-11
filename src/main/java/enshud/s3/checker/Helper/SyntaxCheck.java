@@ -16,7 +16,6 @@ import java.io.IOException;
 public class SyntaxCheck extends Core {
     Program program;
     DeclaredVariable declaredVariable;
-    Procedure procedure;
     Compound compoundStatement;
 
     public SyntaxCheck() {

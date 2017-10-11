@@ -9,9 +9,9 @@ import java.util.Map;
  * Created by Cain96 on 2017/09/30.
  */
 public class Declared {
-    public HashMap<Integer, ArrayList<String>> declaredVariables;
-    public HashMap<Integer, ArrayList<Array>> declaredArrays;
-    public ArrayList<String> declaredFunctions;
+    HashMap<Integer, ArrayList<String>> declaredVariables;
+    HashMap<Integer, ArrayList<Array>> declaredArrays;
+    ArrayList<String> declaredFunctions;
 
     public Declared() {
         declaredVariables = new HashMap<>();

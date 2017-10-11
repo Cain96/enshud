@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * Created by Cain96 on 2017/09/30.
  */
 public class Procedure extends Type {
-    DeclaredVariable declaredVariable;
-    Compound compoundStatement;
-    Declared declared;
+    private DeclaredVariable declaredVariable;
+    private Compound compoundStatement;
+    private Declared declared;
 
     public Procedure(Declared declared) {
         this.declaredVariable = new DeclaredVariable();
