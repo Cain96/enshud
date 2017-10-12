@@ -2,13 +2,11 @@ package enshud.s2.parser.Helper;
 
 import enshud.s2.parser.Helper.Syntax.Core.Core;
 import enshud.s2.parser.Helper.Syntax.DeclaredVariable;
-import enshud.s2.parser.Helper.Syntax.Elements.Elements;
 import enshud.s2.parser.Helper.Syntax.Procedure;
 import enshud.s2.parser.Helper.Syntax.Program;
 import enshud.s2.parser.Helper.Syntax.Statement.Compound;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 
 /**
  * Created by Cain96 on 2017/02/06.

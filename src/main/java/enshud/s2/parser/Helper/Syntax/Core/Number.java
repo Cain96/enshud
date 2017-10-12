@@ -1,7 +1,6 @@
 package enshud.s2.parser.Helper.Syntax.Core;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 
 /**
  * Created by Cain96 on 2017/09/30.
