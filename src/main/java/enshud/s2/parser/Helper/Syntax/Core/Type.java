@@ -11,24 +11,18 @@ public class Type extends Number {
 
     protected BufferedReader typeCheck(BufferedReader br) {
         /**型のcheck**/
-        String line = null;
-
         if (br != null) {
-            try {
-                line = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            getElements(line);
-            if (Arrays.asList(new Integer[]{3, 4, 11}).contains(id)) {
+            if (hasOption(br, new Integer[]{3, 4, 11})) {
                 /**標準型のcheck**/
+                br = idCheck(br, new Integer[]{3, 4, 11});
                 return br;
-            } else if (id != 1) {
+            } else if (!hasOption(br, 1)) {
                 System.err.println("Syntax error: line " + lineNumber);
                 return null;
             }
 
             /**配列型のcheck**/
+            br = idCheck(br, 1);
             br = idCheck(br, 35);
             br = numberCheck(br);
             br = idCheck(br, 39);
