@@ -2,13 +2,11 @@ package enshud.s3.checker.Helper;
 
 import enshud.s3.checker.Helper.Syntax.Core.Core;
 import enshud.s3.checker.Helper.Syntax.DeclaredVariable;
-import enshud.s3.checker.Helper.Syntax.Elements.Elements;
 import enshud.s3.checker.Helper.Syntax.Procedure;
 import enshud.s3.checker.Helper.Syntax.Program;
 import enshud.s3.checker.Helper.Syntax.Statement.Compound;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 
 /**
  * Created by Cain96 on 2017/02/06.

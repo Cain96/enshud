@@ -17,7 +17,7 @@ public class Operator {
                 return INT;
             } else if (logicList.contains(mid) || relationList.contains(mid)) {
                 return BOOL;
-            } else if (mid == EQUAL){
+            } else if (mid == EQUAL) {
                 return EQUAL;
             }
         }

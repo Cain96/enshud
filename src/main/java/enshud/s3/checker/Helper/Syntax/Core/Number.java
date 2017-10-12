@@ -24,7 +24,7 @@ public class Number extends Core {
             }
         }
         /**符号なし整数**/
-        if((br = idCheck(br, 44)) != null) {
+        if ((br = idCheck(br, 44)) != null) {
 
             num = Integer.parseInt(string);
 

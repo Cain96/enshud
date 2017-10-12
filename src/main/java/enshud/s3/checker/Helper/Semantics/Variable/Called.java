@@ -41,7 +41,7 @@ public class Called {
                 return 43;
             }
             for (Map.Entry<String, Integer> variableEntry : entry.getValue().entrySet()) {
-                if (variableEntry.getKey().equals(variable)){
+                if (variableEntry.getKey().equals(variable)) {
                     return variableEntry.getValue();
                 }
             }
