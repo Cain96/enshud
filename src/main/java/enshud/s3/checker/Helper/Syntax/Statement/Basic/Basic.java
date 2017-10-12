@@ -5,6 +5,7 @@ import enshud.s3.checker.Helper.Syntax.Core.Core;
 import enshud.s3.checker.Helper.Syntax.Statement.Compound;
 
 import java.io.BufferedReader;
+import java.util.Iterator;
 
 /**
  * Created by Cain96 on 2017/03/06.
@@ -27,11 +28,20 @@ public class Basic extends Core {
 
             if (hasOption(br, 33)) {
                 /**手続き呼び出し文のオプションcheck**/
+                Iterator<Integer> function = declared.declaredFunctions.get(variableName).values().iterator();
                 br = idCheck(br, 33);
                 br = calledVariableExpression.checkExpression(br);
+                if (function.hasNext() && (function.next() != calledVariableExpression.val)) {
+                    System.err.println("Semantic error: line " + lineNumber);
+                    return null;
+                }
                 while (hasOption(br, 41)) {
                     br = idCheck(br, 41);
                     br = calledVariableExpression.checkExpression(br);
+                    if (function.hasNext() && (function.next() != calledVariableExpression.val)) {
+                        System.err.println("Semantic error: line " + lineNumber);
+                        return null;
+                    }
                 }
                 br = idCheck(br, 34);
             } else if (hasOption(br, 40)) {

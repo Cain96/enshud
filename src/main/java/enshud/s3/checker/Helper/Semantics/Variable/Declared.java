@@ -3,6 +3,7 @@ package enshud.s3.checker.Helper.Semantics.Variable;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Map;
 public class Declared {
     HashMap<Integer, ArrayList<String>> declaredVariables;
     HashMap<Integer, ArrayList<Array>> declaredArrays;
-    ArrayList<String> declaredFunctions;
+    public HashMap<String, LinkedHashMap<String, Integer>> declaredFunctions;
 
     public Declared() {
         declaredVariables = new HashMap<>();
@@ -24,7 +25,7 @@ public class Declared {
         declaredArrays.put(4, new ArrayList<>());
         declaredArrays.put(11, new ArrayList<>());
 
-        declaredFunctions = new ArrayList<>();
+        declaredFunctions = new HashMap<>();
     }
 
     public void setDeclared(Declared declared) {
@@ -34,7 +35,7 @@ public class Declared {
         for (Map.Entry<Integer, ArrayList<Array>> entry : declaredArrays.entrySet()) {
             entry.getValue().addAll(declared.declaredArrays.get(entry.getKey()));
         }
-        declaredFunctions.addAll(declared.declaredFunctions);
+        declaredFunctions.putAll(declared.declaredFunctions);
     }
 
     public BufferedReader addVariables(BufferedReader br, int id, ArrayList<String> newVariables, int lineNumber) {
@@ -65,12 +66,12 @@ public class Declared {
         return br;
     }
 
-    public BufferedReader addFunction(BufferedReader br, String name, int lineNumber) {
+    public BufferedReader addFunction(BufferedReader br, String name, LinkedHashMap<String, Integer> variables, int lineNumber) {
         if (br != null) {
             if (!checkDuplicateVariables(name, lineNumber)) {
                 return null;
             }
-            declaredFunctions.add(name);
+            declaredFunctions.put(name, variables);
         }
         return br;
     }
@@ -96,8 +97,10 @@ public class Declared {
                 }
             }
         }
-        if (declaredFunctions.contains(name)) {
-            return true;
+        for (String function : declaredFunctions.keySet()) {
+            if (function.equals(name)) {
+                return true;
+            }
         }
         return false;
     }

@@ -1,9 +1,8 @@
 package enshud.s3.checker.Helper.Semantics.Variable;
 
-import enshud.s1.lexer.Token.Check;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Map;
 public class Called {
     private HashMap<Integer, ArrayList<String>> declaredVariables;
     private HashMap<Integer, ArrayList<Array>> declaredArrays;
-    private ArrayList<String> declaredFunctions;
+    private HashMap<String, LinkedHashMap<String, Integer>> declaredFunctions;
     public boolean isArray;
 
 
@@ -37,19 +36,25 @@ public class Called {
                 }
             }
         }
-        if (declaredFunctions.contains(variable)) {
-            return 43;
+        for (Map.Entry<String, LinkedHashMap<String, Integer>> entry : declaredFunctions.entrySet()) {
+            if (entry.getKey().equals(variable)) {
+                return 43;
+            }
+            for (Map.Entry<String, Integer> variableEntry : entry.getValue().entrySet()) {
+                if (variableEntry.getKey().equals(variable)){
+                    return variableEntry.getValue();
+                }
+            }
         }
         System.err.println("Semantic error: line " + lineNumber);
         return -1;
     }
 
-    public boolean checkArrayIndex(int id){
+    public boolean checkArrayIndex(int id) {
         final int INT = 11;
-        if (id == INT){
+        if (id == INT) {
             return true;
         }
         return false;
     }
-
 }

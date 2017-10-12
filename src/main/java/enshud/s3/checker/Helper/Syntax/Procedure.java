@@ -6,6 +6,8 @@ import enshud.s3.checker.Helper.Syntax.Statement.Compound;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Created by Cain96 on 2017/09/30.
@@ -22,37 +24,42 @@ public class Procedure extends Type {
     }
 
     public BufferedReader checkProcedure(BufferedReader br) {
-        ArrayList<String> variables = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
+        LinkedHashMap<String, Integer> variables = new LinkedHashMap<>();
 
         br = idCheck(br, 16);
         br = idCheck(br, 43);
-        br = declared.addFunction(br, string, lineNumber);
+        String procedureName = string;
         if (hasOption(br, 33)) {
             br = idCheck(br, 33);
             br = idCheck(br, 43);
-            variables.add(limitWordCount(string));
+            list.add(string);
             while (hasOption(br, 41)) {
                 br = idCheck(br, 41);
                 br = idCheck(br, 43);
-                variables.add(limitWordCount(string));
+                list.add(string);
             }
             br = idCheck(br, 38);
-            br = typeCheck(br, variables, declaredVariable.declared);
+            br = procedureTypeCheck(br);
+            /**Listをmapへ変換**/
+            variables.putAll(list.stream().collect(Collectors.toMap(s -> s, i -> id)));
             while (hasOption(br, 37)) {
-                variables.clear();
+                list.clear();
                 br = idCheck(br, 37);
                 br = idCheck(br, 43);
-                variables.add(limitWordCount(string));
+                list.add(string);
                 while (hasOption(br, 41)) {
                     br = idCheck(br, 41);
                     br = idCheck(br, 43);
-                    variables.add(limitWordCount(string));
+                    list.add(string);
                 }
                 br = idCheck(br, 38);
-                br = typeCheck(br, variables, declaredVariable.declared);
+                br = procedureTypeCheck(br);
+                variables.putAll(list.stream().collect(Collectors.toMap(s -> s, i -> id)));
             }
             br = idCheck(br, 34);
         }
+        br = declared.addFunction(br, procedureName, variables, lineNumber);
 
         br = idCheck(br, 37);
 
