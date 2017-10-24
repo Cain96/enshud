@@ -14,7 +14,7 @@ class Core {
 
 class Number {
 }
-
+                    
 class Type {
 }
 
@@ -39,8 +39,8 @@ class Procedure {
 class Program {
 }
 
-Number  <|-- Type
-Type <|-- Core
+Type  <|-- Number
+Number <|-- Core
 Core <|-- Elements
 
 Basic <|-- Core
