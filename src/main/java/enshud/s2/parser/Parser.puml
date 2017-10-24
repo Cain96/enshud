@@ -1,0 +1,68 @@
+@startuml
+
+class Parser {
+}
+
+class FileRead {
+}
+
+class SyntaxCheck {
+}
+
+class Core {
+}
+
+class Number {
+}
+                    
+class Type {
+}
+
+class Elements {
+}
+
+class Basic {
+}
+
+class CalledVariableExpression {
+}
+
+class Compound {
+}
+
+class DeclaredVariable {
+}
+
+class Procedure {
+}
+
+class Program {
+}
+
+Type  <|-- Number
+Number <|-- Core
+Core <|-- Elements
+
+Basic <|-- Core
+Basic o-- CalledVariableExpression
+
+CalledVariableExpression <|-- Core
+
+Compound <|-- Core
+Compound o-- Basic
+
+DeclaredVariable <|-- Type
+
+Procedure <|-- Core
+Procedure o-- Compound
+Procedure o-- DeclaredVariable
+
+Program <|-- Core
+
+SyntaxCheck <|-- Core
+SyntaxCheck o-- Program
+SyntaxCheck o-- Procedure
+SyntaxCheck o-- DeclaredVariable
+SyntaxCheck o-- Compound
+
+@enduml
