@@ -1,6 +1,5 @@
 package enshud.s4.compiler.Helper.Semantics.Variable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,8 +8,8 @@ import java.util.Map;
  * Created by Cain96 on 2017/09/30.
  */
 public class Called {
-    private HashMap<Integer, ArrayList<String>> declaredVariables;
-    private HashMap<Integer, ArrayList<Array>> declaredArrays;
+    private HashMap<Integer, HashMap<String, Integer>> declaredVariables;
+    private HashMap<Integer, HashMap<Array, Integer>> declaredArrays;
     private HashMap<String, LinkedHashMap<String, Integer>> declaredFunctions;
     public boolean isArray;
 
@@ -23,13 +22,13 @@ public class Called {
 
     public int semanticCheckCalledVariable(String variable, int lineNumber) {
         isArray = false;
-        for (Map.Entry<Integer, ArrayList<String>> entry : declaredVariables.entrySet()) {
-            if (entry.getValue().contains(variable)) {
+        for (Map.Entry<Integer, HashMap<String, Integer>> entry : declaredVariables.entrySet()) {
+            if (entry.getValue().containsKey(variable)) {
                 return entry.getKey();
             }
         }
-        for (Map.Entry<Integer, ArrayList<Array>> entry : declaredArrays.entrySet()) {
-            for (Array array : entry.getValue()) {
+        for (Map.Entry<Integer, HashMap<Array, Integer>> entry : declaredArrays.entrySet()) {
+            for (Array array : entry.getValue().keySet()) {
                 if (array.getName().equals(variable)) {
                     isArray = true;
                     return entry.getKey();

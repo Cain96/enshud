@@ -5,35 +5,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Cain96 on 2017/09/30.
  */
 public class Declared {
-    HashMap<Integer, ArrayList<String>> declaredVariables;
-    HashMap<Integer, ArrayList<Array>> declaredArrays;
+    HashMap<Integer, HashMap<String, Integer>> declaredVariables;
+    HashMap<Integer, HashMap<Array, Integer>> declaredArrays;
     public HashMap<String, LinkedHashMap<String, Integer>> declaredFunctions;
 
-    public Declared() {
+    public int index;
+
+    public Declared(int index) {
         declaredVariables = new HashMap<>();
-        declaredVariables.put(3, new ArrayList<>());
-        declaredVariables.put(4, new ArrayList<>());
-        declaredVariables.put(11, new ArrayList<>());
+        declaredVariables.put(3, new HashMap<>());
+        declaredVariables.put(4, new HashMap<>());
+        declaredVariables.put(11, new HashMap<>());
 
         declaredArrays = new HashMap<>();
-        declaredArrays.put(3, new ArrayList<>());
-        declaredArrays.put(4, new ArrayList<>());
-        declaredArrays.put(11, new ArrayList<>());
+        declaredArrays.put(3, new HashMap<>());
+        declaredArrays.put(4, new HashMap<>());
+        declaredArrays.put(11, new HashMap<>());
 
         declaredFunctions = new HashMap<>();
+
+        this.index = index;
     }
 
     public void setDeclared(Declared declared) {
-        for (Map.Entry<Integer, ArrayList<String>> entry : declaredVariables.entrySet()) {
-            entry.getValue().addAll(declared.declaredVariables.get(entry.getKey()));
+        for (Map.Entry<Integer, HashMap<String, Integer>> entry : declaredVariables.entrySet()) {
+            entry.getValue().putAll(declared.declaredVariables.get(entry.getKey()));
         }
-        for (Map.Entry<Integer, ArrayList<Array>> entry : declaredArrays.entrySet()) {
-            entry.getValue().addAll(declared.declaredArrays.get(entry.getKey()));
+        for (Map.Entry<Integer, HashMap<Array, Integer>> entry : declaredArrays.entrySet()) {
+            entry.getValue().putAll(declared.declaredArrays.get(entry.getKey()));
         }
         declaredFunctions.putAll(declared.declaredFunctions);
     }
@@ -45,9 +50,14 @@ public class Declared {
                     return null;
                 }
             }
-            ArrayList<String> variables = declaredVariables.get(id);
+            Map<String, Integer> variablesHash = newVariables.stream()
+                    .collect(Collectors.toMap(
+                            s -> s,
+                            s -> index++
+                    ));
+            HashMap<String, Integer> variables = declaredVariables.get(id);
             if (variables != null) {
-                variables.addAll(newVariables);
+                variables.putAll(variablesHash);
             }
         }
         return br;
@@ -58,9 +68,10 @@ public class Declared {
             if (!checkDuplicateVariables(newVariables.getName(), lineNumber)) {
                 return null;
             }
-            ArrayList variables = declaredArrays.get(id);
+            HashMap variables = declaredArrays.get(id);
             if (variables != null) {
-                variables.add(newVariables);
+                variables.put(newVariables, index);
+                index += newVariables.getMax();
             }
         }
         return br;
@@ -85,13 +96,13 @@ public class Declared {
     }
 
     private boolean hasDuplicateVariables(String name) {
-        for (ArrayList<String> variables : declaredVariables.values()) {
-            if (variables.contains(name)) {
+        for (HashMap<String, Integer> variables : declaredVariables.values()) {
+            if (variables.containsKey(name)) {
                 return true;
             }
         }
-        for (ArrayList<Array> arrays : declaredArrays.values()) {
-            for (Array array : arrays) {
+        for (HashMap<Array, Integer> arrays : declaredArrays.values()) {
+            for (Array array : arrays.keySet()) {
                 if (array.getName().equals(name)) {
                     return true;
                 }

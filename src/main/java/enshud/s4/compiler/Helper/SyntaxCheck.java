@@ -18,7 +18,7 @@ public class SyntaxCheck extends Core {
 
     public SyntaxCheck() {
         this.program = new Program();
-        this.declaredVariable = new DeclaredVariable();
+        this.declaredVariable = new DeclaredVariable(0);
         this.compoundStatement = new Compound(declaredVariable.declared);
     }
 

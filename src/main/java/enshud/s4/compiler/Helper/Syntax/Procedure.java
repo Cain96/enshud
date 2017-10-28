@@ -18,7 +18,7 @@ public class Procedure extends Type {
     private Declared declared;
 
     public Procedure(Declared declared) {
-        this.declaredVariable = new DeclaredVariable();
+        this.declaredVariable = new DeclaredVariable(declared.index);
         this.declared = declared;
         this.compoundStatement = new Compound(declaredVariable.declared);
     }
