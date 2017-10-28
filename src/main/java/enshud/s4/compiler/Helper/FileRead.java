@@ -1,5 +1,7 @@
 package enshud.s4.compiler.Helper;
 
+import enshud.casl.CaslSimulator;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,7 +12,7 @@ import java.io.IOException;
  */
 public class FileRead {
 
-    public void fileRead(String inputFileName) {
+    public void fileRead(String inputFileName, String outputFileName) {
 
         FileReader fr;
         BufferedReader br;
@@ -32,5 +34,7 @@ public class FileRead {
         } catch (IOException e) {
             System.err.println("File not found");
         }
+
+        CaslSimulator.appendLibcas(outputFileName);
     }
 }

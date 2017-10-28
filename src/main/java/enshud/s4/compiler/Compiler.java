@@ -38,7 +38,7 @@ public class Compiler {
 		}
 
 		FileRead fileRead = new FileRead();
-		fileRead.fileRead(inputFileName);
+		fileRead.fileRead(inputFileName, outputFileName);
 
 	}
 }
