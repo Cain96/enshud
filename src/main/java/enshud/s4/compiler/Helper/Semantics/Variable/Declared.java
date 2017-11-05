@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
  * Created by Cain96 on 2017/09/30.
  */
 public class Declared {
-    HashMap<Integer, HashMap<String, Integer>> declaredVariables;
-    HashMap<Integer, HashMap<Array, Integer>> declaredArrays;
-    public HashMap<String, LinkedHashMap<String, Integer>> declaredFunctions;
+    public HashMap<Integer, HashMap<String, Integer>> declaredVariables;
+    public HashMap<Integer, HashMap<Array, Integer>> declaredArrays;
+    public LinkedHashMap<String, LinkedHashMap<String, Integer>> declaredFunctions;
 
-    public int index;
+    private static int index = 0;
 
-    public Declared(int index) {
+    public Declared() {
         declaredVariables = new HashMap<>();
         declaredVariables.put(3, new HashMap<>());
         declaredVariables.put(4, new HashMap<>());
@@ -28,9 +28,7 @@ public class Declared {
         declaredArrays.put(4, new HashMap<>());
         declaredArrays.put(11, new HashMap<>());
 
-        declaredFunctions = new HashMap<>();
-
-        this.index = index;
+        declaredFunctions = new LinkedHashMap<>();
     }
 
     public void setDeclared(Declared declared) {

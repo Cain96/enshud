@@ -1,6 +1,7 @@
 package enshud.s4.compiler.Helper;
 
 import enshud.casl.CaslSimulator;
+import enshud.s4.compiler.Helper.Output.Output;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,7 +20,8 @@ public class FileRead {
         try {
             fr = new FileReader(inputFileName);
             br = new BufferedReader(fr);
-            SyntaxCheck syntaxCheck = new SyntaxCheck();
+            Output output = new Output(outputFileName);
+            SyntaxCheck syntaxCheck = new SyntaxCheck(output);
 
             String line;
             line = br.readLine();

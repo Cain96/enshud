@@ -1,5 +1,6 @@
 package enshud.s4.compiler.Helper.Syntax;
 
+import enshud.s4.compiler.Helper.Output.Output;
 import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
 import enshud.s4.compiler.Helper.Syntax.Core.Type;
 import enshud.s4.compiler.Helper.Syntax.Statement.Compound;
@@ -17,10 +18,10 @@ public class Procedure extends Type {
     private Compound compoundStatement;
     private Declared declared;
 
-    public Procedure(Declared declared) {
-        this.declaredVariable = new DeclaredVariable(declared.index);
+    public Procedure(Declared declared, Output output) {
+        this.declaredVariable = new DeclaredVariable();
         this.declared = declared;
-        this.compoundStatement = new Compound(declaredVariable.declared);
+        this.compoundStatement = new Compound(declaredVariable.declared, output);
     }
 
     public BufferedReader checkProcedure(BufferedReader br) {

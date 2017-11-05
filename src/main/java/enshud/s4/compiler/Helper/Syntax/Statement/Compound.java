@@ -1,6 +1,7 @@
 package enshud.s4.compiler.Helper.Syntax.Statement;
 
 
+import enshud.s4.compiler.Helper.Output.Output;
 import enshud.s4.compiler.Helper.Semantics.Expression.Expression;
 import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
 import enshud.s4.compiler.Helper.Syntax.Core.Core;
@@ -15,8 +16,8 @@ public class Compound extends Core {
     private Basic basic;
     private Expression expression;
 
-    public Compound(Declared declared) {
-        this.basic = new Basic(declared);
+    public Compound(Declared declared, Output output) {
+        this.basic = new Basic(declared, output);
         this.expression = new Expression();
     }
 

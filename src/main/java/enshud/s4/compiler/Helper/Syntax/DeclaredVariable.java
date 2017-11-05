@@ -13,8 +13,8 @@ public class DeclaredVariable extends Type {
 
     public Declared declared;
 
-    public DeclaredVariable(int index) {
-        this.declared = new Declared(index);
+    public DeclaredVariable() {
+        this.declared = new Declared();
     }
 
     public BufferedReader checkDeclaredVariable(BufferedReader br) {

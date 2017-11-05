@@ -11,7 +11,7 @@ public class Operator {
     List<Integer> logicList = Arrays.asList(new Integer[]{0, 15});
     List<Integer> relationList = Arrays.asList(new Integer[]{24, 25, 26, 27, 28, 29});
 
-    public int check(int prev, int mid, int follow, int lineNumber) {
+    public int check(int prev, int mid, int follow) {
         if (prev == follow) {
             if (arithmeticList.contains(mid)) {
                 return INT;

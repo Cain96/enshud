@@ -29,4 +29,8 @@ public class Output {
     public void writeFile(String order, String op) {
         pw.println("\t" + order + "\t" + op);
     }
+
+    public void addFile(String string){
+        pw.print(string);
+    }
 }

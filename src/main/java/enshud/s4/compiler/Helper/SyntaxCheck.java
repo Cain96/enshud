@@ -1,5 +1,7 @@
 package enshud.s4.compiler.Helper;
 
+import enshud.s4.compiler.Helper.Output.End;
+import enshud.s4.compiler.Helper.Output.Output;
 import enshud.s4.compiler.Helper.Syntax.Core.Core;
 import enshud.s4.compiler.Helper.Syntax.DeclaredVariable;
 import enshud.s4.compiler.Helper.Syntax.Procedure;
@@ -15,11 +17,15 @@ public class SyntaxCheck extends Core {
     Program program;
     DeclaredVariable declaredVariable;
     Compound compoundStatement;
+    Output output;
+    End end;
 
-    public SyntaxCheck() {
+    public SyntaxCheck(Output output) {
         this.program = new Program();
-        this.declaredVariable = new DeclaredVariable(0);
-        this.compoundStatement = new Compound(declaredVariable.declared);
+        this.declaredVariable = new DeclaredVariable();
+        this.compoundStatement = new Compound(declaredVariable.declared, output);
+        this.output = output;
+        this.end = new End();
     }
 
     BufferedReader syntaxCheck(String line, BufferedReader br) {
@@ -41,7 +47,7 @@ public class SyntaxCheck extends Core {
 
         /** 副プログラムのcheck **/
         while (hasOption(br, 16) && (br != null)) {
-            br = new Procedure(declaredVariable.declared).checkProcedure(br);
+            br = new Procedure(declaredVariable.declared, output).checkProcedure(br);
         }
 
         /** 複合文のcheck **/
@@ -51,6 +57,8 @@ public class SyntaxCheck extends Core {
         if (br != null) {
             br = idCheck(br, 42);
         }
+
+        output.addFile(end.getBuf());
 
         return br;
     }
