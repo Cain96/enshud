@@ -18,7 +18,7 @@ public class Basic extends Core {
     public Declared declared;
     private Variables variables;
     private Output output;
-    private Write write;
+    public Write write;
 
     public Basic(Declared declared, Output output) {
         this.write = new Write();
@@ -97,10 +97,12 @@ public class Basic extends Core {
             /**複合文のcheck**/
             Compound cs = new Compound(declared, output);
             br = cs.checkCompoundStatement(br);
+            return br;
         } else if (br != null) {
             System.err.println("Syntax error: line " + lineNumber);
             return null;
         }
+        /**複合文以外の基本文を書き込み**/
         output.addFile(write.getBuf());
         return br;
     }

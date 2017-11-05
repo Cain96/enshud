@@ -13,11 +13,13 @@ import java.io.BufferedReader;
  * Created by Cain96 on 2017/03/06.
  */
 public class Compound extends Core {
-    private Basic basic;
+    private Declared declared;
+    private Output output;
     private Expression expression;
 
     public Compound(Declared declared, Output output) {
-        this.basic = new Basic(declared, output);
+        this.declared = declared;
+        this.output = output;
         this.expression = new Expression();
     }
 
@@ -38,6 +40,7 @@ public class Compound extends Core {
     private BufferedReader statementChecker(BufferedReader br) {
         /**文のcheck**/
         if (br != null) {
+            Basic basic = new Basic(declared, output);
             if (hasOption(br, 10)) {
                 /**if分のcheck**/
                 br = idCheck(br, 10);
@@ -66,6 +69,7 @@ public class Compound extends Core {
                 /**基本文のcheck**/
                 br = basic.basicStatementChecker(br);
             }
+            output.addFile(basic.write.getBuf());
         }
         return br;
     }

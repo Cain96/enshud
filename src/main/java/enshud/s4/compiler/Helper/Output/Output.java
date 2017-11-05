@@ -30,7 +30,13 @@ public class Output {
         pw.println("\t" + order + "\t" + op);
     }
 
-    public void addFile(String string){
-        pw.print(string);
+    public void addFile(String string) {
+        if (string != null) {
+            pw.print(string);
+        }
+    }
+
+    public void closeFile() {
+        pw.close();
     }
 }

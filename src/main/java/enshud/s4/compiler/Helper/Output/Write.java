@@ -4,11 +4,19 @@ public class Write {
     private String buf;
 
     void addLine(String label, String order, String op) {
-        buf += label + "\t" + order + "\t" + op + "\n";
+        if (buf != null) {
+            buf += label + "\t" + order + "\t" + op + "\n";
+        } else {
+            buf = label + "\t" + order + "\t" + op + "\n";
+        }
     }
 
     void addLine(String order, String op) {
-        buf += "\t" + order + "\t" + op + "\n";
+        if (buf != null) {
+            buf += "\t" + order + "\t" + op + "\n";
+        } else {
+            buf = "\t" + order + "\t" + op + "\n";
+        }
     }
 
     void addLabel(String label) {

@@ -31,6 +31,7 @@ public class FileRead {
                 fr.close();
                 System.out.println("OK");
             }
+            output.closeFile();
         } catch (FileNotFoundException e) {
             System.err.println("File not found");
         } catch (IOException e) {
