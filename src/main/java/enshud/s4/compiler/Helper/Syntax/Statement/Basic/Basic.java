@@ -1,5 +1,8 @@
 package enshud.s4.compiler.Helper.Syntax.Statement.Basic;
 
+import enshud.s4.compiler.Helper.Output.Output;
+import enshud.s4.compiler.Helper.Output.Variables;
+import enshud.s4.compiler.Helper.Output.Write;
 import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
 import enshud.s4.compiler.Helper.Syntax.Core.Core;
 import enshud.s4.compiler.Helper.Syntax.Statement.Compound;
@@ -13,10 +16,16 @@ import java.util.Iterator;
 public class Basic extends Core {
     public CalledVariableExpression calledVariableExpression;
     public Declared declared;
+    private Variables variables;
+    private Output output;
+    private Write write;
 
-    public Basic(Declared declared) {
-        this.calledVariableExpression = new CalledVariableExpression(declared);
+    public Basic(Declared declared, Output output) {
+        this.write = new Write();
+        this.variables = new Variables(declared, write);
+        this.calledVariableExpression = new CalledVariableExpression(declared, write, variables);
         this.declared = declared;
+        this.output = output;
     }
 
     public BufferedReader basicStatementChecker(BufferedReader br) {
@@ -25,6 +34,7 @@ public class Basic extends Core {
             String variableName = string;
             int variableLine = lineNumber;
             br = calledVariableExpression.checkAssignedVariable(br, variableName, variableLine);
+            boolean isArray = calledVariableExpression.called.isArray;
 
             if (hasOption(br, 33)) {
                 /**手続き呼び出し文のオプションcheck**/
@@ -44,6 +54,7 @@ public class Basic extends Core {
                     }
                 }
                 br = idCheck(br, 34);
+                variables.callFunction(variableName);
             } else if (hasOption(br, 40)) {
                 /**代入文のcheck**/
                 int prev = calledVariableExpression.val;
@@ -51,10 +62,11 @@ public class Basic extends Core {
                 int mid = id;
                 br = calledVariableExpression.checkExpression(br);
                 int follow = calledVariableExpression.val;
-                if (calledVariableExpression.operator.check(prev, mid, follow, lineNumber) < 0) {
+                if (calledVariableExpression.operator.check(prev, mid, follow) < 0) {
                     System.err.println("Semantic error: line " + lineNumber);
                     return null;
                 }
+                variables.store(variableName, isArray);
             }
         } else if (hasOption(br, 18)) {
             /**入力文のcheck**/
@@ -83,12 +95,13 @@ public class Basic extends Core {
             }
         } else if (hasOption(br, 2)) {
             /**複合文のcheck**/
-            Compound cs = new Compound(declared);
+            Compound cs = new Compound(declared, output);
             br = cs.checkCompoundStatement(br);
         } else if (br != null) {
             System.err.println("Syntax error: line " + lineNumber);
             return null;
         }
+        output.addFile(write.getBuf());
         return br;
     }
 }

@@ -1,6 +1,9 @@
 package enshud.s4.compiler.Helper.Syntax.Statement.Basic;
 
 
+import enshud.s4.compiler.Helper.Output.Calculation;
+import enshud.s4.compiler.Helper.Output.Variables;
+import enshud.s4.compiler.Helper.Output.Write;
 import enshud.s4.compiler.Helper.Semantics.Operator.Operator;
 import enshud.s4.compiler.Helper.Semantics.Variable.Called;
 import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
@@ -15,11 +18,17 @@ public class CalledVariableExpression extends Core {
 
     Called called;
     Operator operator;
+    Calculation calculation;
+    Variables variables;
     public int val;
 
-    public CalledVariableExpression(Declared declared) {
+    private boolean minus = false;
+
+    public CalledVariableExpression(Declared declared, Write write, Variables variables) {
         this.called = new Called(declared);
         this.operator = new Operator();
+        this.calculation = new Calculation(write);
+        this.variables = variables;
     }
 
     BufferedReader checkAssignedVariable(BufferedReader br, String variable, int lineNumber) {
@@ -61,6 +70,9 @@ public class CalledVariableExpression extends Core {
                 return null;
             }
             br = idCheck(br, 36);
+            variables.callArray(variable);
+        } else {
+            variables.call(variable);
         }
         return br;
     }
@@ -74,8 +86,28 @@ public class CalledVariableExpression extends Core {
             int mid = id;
             br = checkSimpleExpression(br);
             int follow = val;
-            if ((prev = operator.check(prev, mid, follow, lineNumber)) < 0) {
+            if ((prev = operator.check(prev, mid, follow)) < 0) {
                 return null;
+            }
+            switch (mid) {
+                case 24:
+                    calculation.equal();
+                    break;
+                case 25:
+                    calculation.notEqual();
+                    break;
+                case 26:
+                    calculation.moreThan();
+                    break;
+                case 27:
+                    calculation.above();
+                    break;
+                case 28:
+                    calculation.below();
+                    break;
+                case 29:
+                    calculation.lessThan();
+                    break;
             }
         }
         val = prev;
@@ -84,8 +116,13 @@ public class CalledVariableExpression extends Core {
 
     private BufferedReader checkSimpleExpression(BufferedReader br) {
         /**単純式のcheck**/
-        if (hasOption(br, new Integer[]{30, 31})) {/**符号**/
+        minus = false;
+        if (hasOption(br, new Integer[]{30, 31})) {
+            /**符号**/
             br = idCheck(br, new Integer[]{30, 31});
+            if (id == 31) {
+                minus = true;
+            }
         }
         br = checkTerm(br);
         int prev = val;
@@ -94,8 +131,19 @@ public class CalledVariableExpression extends Core {
             int mid = id;
             br = checkTerm(br);
             int follow = val;
-            if ((prev = operator.check(prev, mid, follow, lineNumber)) < 0) {
+            if ((prev = operator.check(prev, mid, follow)) < 0) {
                 return null;
+            }
+            switch (mid) {
+                case 15:
+                    calculation.or();
+                    break;
+                case 30:
+                    calculation.add();
+                    break;
+                case 31:
+                    calculation.sub();
+                    break;
             }
         }
         val = prev;
@@ -111,8 +159,22 @@ public class CalledVariableExpression extends Core {
             int mid = id;
             br = checkFactor(br);
             int follow = val;
-            if ((prev = operator.check(prev, mid, follow, lineNumber)) < 0) {
+            if ((prev = operator.check(prev, mid, follow)) < 0) {
                 return null;
+            }
+            switch (mid) {
+                case 0:
+                    calculation.and();
+                    break;
+                case 5:
+                    calculation.div();
+                    break;
+                case 12:
+                    calculation.mod();
+                    break;
+                case 32:
+                    calculation.mult();
+                    break;
             }
         }
         val = prev;
@@ -129,10 +191,19 @@ public class CalledVariableExpression extends Core {
             /**定数**/
             br = idCheck(br, new Integer[]{9, 20, 44, 45});
             if (id == 44) {
+                if (minus) {
+                    string = "-" + string;
+                }
+                calculation.pushNum(string);
                 val = 11;
             } else if (id == 45) {
+
                 val = 4;
+            } else if (id == 20) {
+                calculation.push("#0000");
+                val = 3;
             } else {
+                calculation.push("#FFFF");
                 val = 3;
             }
         } else if (hasOption(br, 33)) {
@@ -144,6 +215,7 @@ public class CalledVariableExpression extends Core {
             /**"not" 因子**/
             br = idCheck(br, 13);
             br = checkFactor(br);
+            calculation.not();
         } else if (br != null) {
             System.err.println("Syntax error: line " + lineNumber);
             return null;
