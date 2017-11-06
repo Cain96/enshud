@@ -1,6 +1,5 @@
 package enshud.s4.compiler.Helper.Syntax.Statement.Basic;
 
-import enshud.s4.compiler.Helper.Output.Output;
 import enshud.s4.compiler.Helper.Output.Variables;
 import enshud.s4.compiler.Helper.Output.Write;
 import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
@@ -10,22 +9,22 @@ import enshud.s4.compiler.Helper.Syntax.Statement.Compound;
 import java.io.BufferedReader;
 import java.util.Iterator;
 
+import static enshud.s4.compiler.Helper.FileRead.output;
+
 /**
  * Created by Cain96 on 2017/03/06.
  */
 public class Basic extends Core {
     public CalledVariableExpression calledVariableExpression;
+    public Variables variables;
     public Declared declared;
-    private Variables variables;
-    private Output output;
     public Write write;
 
-    public Basic(Declared declared, Output output) {
+    public Basic(Declared declared) {
         this.write = new Write();
         this.variables = new Variables(declared, write);
-        this.calledVariableExpression = new CalledVariableExpression(declared, write, variables);
+        this.calledVariableExpression = new CalledVariableExpression(declared);
         this.declared = declared;
-        this.output = output;
     }
 
     public BufferedReader basicStatementChecker(BufferedReader br) {
@@ -95,7 +94,7 @@ public class Basic extends Core {
             }
         } else if (hasOption(br, 2)) {
             /**複合文のcheck**/
-            Compound cs = new Compound(declared, output);
+            Compound cs = new Compound(declared);
             br = cs.checkCompoundStatement(br);
             return br;
         } else if (br != null) {

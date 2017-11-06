@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class Variables {
     private Declared declared;
-    private Write write;
     private ArrayList<String> functionNames;
+    public Write write;
 
     public Variables(Declared declared, Write write) {
         this.declared = declared;

@@ -3,7 +3,7 @@ package enshud.s4.compiler.Helper.Output;
 public class Write {
     private String buf;
 
-    void addLine(String label, String order, String op) {
+    public void addLine(String label, String order, String op) {
         if (buf != null) {
             buf += label + "\t" + order + "\t" + op + "\n";
         } else {
@@ -11,7 +11,7 @@ public class Write {
         }
     }
 
-    void addLine(String order, String op) {
+    public void addLine(String order, String op) {
         if (buf != null) {
             buf += "\t" + order + "\t" + op + "\n";
         } else {
@@ -20,7 +20,11 @@ public class Write {
     }
 
     void addLabel(String label) {
-        buf += label;
+        if (buf != null) {
+            buf += label + "\tNOP\n";
+        } else {
+            buf = label + "\tNOP\n";
+        }
     }
 
     public String getBuf() {

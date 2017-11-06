@@ -11,6 +11,8 @@ import enshud.s4.compiler.Helper.Syntax.Core.Core;
 
 import java.io.BufferedReader;
 
+import static enshud.s4.compiler.Helper.FileRead.output;
+
 /**
  * Created by Cain96 on 2017/09/30.
  */
@@ -18,17 +20,15 @@ public class CalledVariableExpression extends Core {
 
     Called called;
     Operator operator;
-    Calculation calculation;
-    Variables variables;
+    Declared declared;
     public int val;
 
     private boolean minus = false;
 
-    public CalledVariableExpression(Declared declared, Write write, Variables variables) {
+    public CalledVariableExpression(Declared declared) {
         this.called = new Called(declared);
         this.operator = new Operator();
-        this.calculation = new Calculation(write);
-        this.variables = variables;
+        this.declared = declared;
     }
 
     BufferedReader checkAssignedVariable(BufferedReader br, String variable, int lineNumber) {
@@ -59,6 +59,7 @@ public class CalledVariableExpression extends Core {
     BufferedReader checkCalledVariable(BufferedReader br, String variable, int lineNumber) {
         /**変数のcheck**/
 
+        Variables variables = new Variables(declared, new Write());
         if ((val = called.semanticCheckCalledVariable(variable, lineNumber)) < 0) {
             return null;
         }
@@ -74,17 +75,19 @@ public class CalledVariableExpression extends Core {
         } else {
             variables.call(variable);
         }
+        output.addFile(variables.write.getBuf());
         return br;
     }
 
     public BufferedReader checkExpression(BufferedReader br) {
         /**式のcheck**/
-        br = checkSimpleExpression(br);
+        Calculation calculation = new Calculation(new Write());
+        br = checkSimpleExpression(br, calculation);
         int prev = val;
         while (hasOption(br, new Integer[]{24, 25, 26, 27, 28, 29})) {/**関係演算子**/
             br = idCheck(br, new Integer[]{24, 25, 26, 27, 28, 29});
             int mid = id;
-            br = checkSimpleExpression(br);
+            br = checkSimpleExpression(br, calculation);
             int follow = val;
             if ((prev = operator.check(prev, mid, follow)) < 0) {
                 return null;
@@ -111,10 +114,11 @@ public class CalledVariableExpression extends Core {
             }
         }
         val = prev;
+        output.addFile(calculation.write.getBuf());
         return br;
     }
 
-    private BufferedReader checkSimpleExpression(BufferedReader br) {
+    private BufferedReader checkSimpleExpression(BufferedReader br, Calculation calculation) {
         /**単純式のcheck**/
         minus = false;
         if (hasOption(br, new Integer[]{30, 31})) {
@@ -124,12 +128,12 @@ public class CalledVariableExpression extends Core {
                 minus = true;
             }
         }
-        br = checkTerm(br);
+        br = checkTerm(br, calculation);
         int prev = val;
         while (hasOption(br, new Integer[]{15, 30, 31})) {/**加法演算子**/
             br = idCheck(br, new Integer[]{15, 30, 31});
             int mid = id;
-            br = checkTerm(br);
+            br = checkTerm(br, calculation);
             int follow = val;
             if ((prev = operator.check(prev, mid, follow)) < 0) {
                 return null;
@@ -150,14 +154,14 @@ public class CalledVariableExpression extends Core {
         return br;
     }
 
-    private BufferedReader checkTerm(BufferedReader br) {
+    private BufferedReader checkTerm(BufferedReader br, Calculation calculation) {
         /**項のcheck**/
-        br = checkFactor(br);
+        br = checkFactor(br, calculation);
         int prev = val;
         while (hasOption(br, new Integer[]{0, 5, 12, 32})) {/**乗法演算子**/
             br = idCheck(br, new Integer[]{0, 5, 12, 32});
             int mid = id;
-            br = checkFactor(br);
+            br = checkFactor(br, calculation);
             int follow = val;
             if ((prev = operator.check(prev, mid, follow)) < 0) {
                 return null;
@@ -181,7 +185,7 @@ public class CalledVariableExpression extends Core {
         return br;
     }
 
-    private BufferedReader checkFactor(BufferedReader br) {
+    private BufferedReader checkFactor(BufferedReader br, Calculation calculation) {
         /**因子のcheck**/
         if (hasOption(br, 43)) {
             /**変数**/
@@ -214,7 +218,7 @@ public class CalledVariableExpression extends Core {
         } else if (hasOption(br, 13)) {
             /**"not" 因子**/
             br = idCheck(br, 13);
-            br = checkFactor(br);
+            br = checkFactor(br, calculation);
             calculation.not();
         } else if (br != null) {
             System.err.println("Syntax error: line " + lineNumber);

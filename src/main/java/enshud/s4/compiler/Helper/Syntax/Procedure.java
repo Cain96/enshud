@@ -1,6 +1,5 @@
 package enshud.s4.compiler.Helper.Syntax;
 
-import enshud.s4.compiler.Helper.Output.Output;
 import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
 import enshud.s4.compiler.Helper.Syntax.Core.Type;
 import enshud.s4.compiler.Helper.Syntax.Statement.Compound;
@@ -18,10 +17,10 @@ public class Procedure extends Type {
     private Compound compoundStatement;
     private Declared declared;
 
-    public Procedure(Declared declared, Output output) {
+    public Procedure(Declared declared) {
         this.declaredVariable = new DeclaredVariable();
         this.declared = declared;
-        this.compoundStatement = new Compound(declaredVariable.declared, output);
+        this.compoundStatement = new Compound(declaredVariable.declared);
     }
 
     public BufferedReader checkProcedure(BufferedReader br) {
@@ -34,11 +33,11 @@ public class Procedure extends Type {
         if (hasOption(br, 33)) {
             br = idCheck(br, 33);
             br = idCheck(br, 43);
-            list.add(string);
+            list.add(limitWordCount(string));
             while (hasOption(br, 41)) {
                 br = idCheck(br, 41);
                 br = idCheck(br, 43);
-                list.add(string);
+                list.add(limitWordCount(string));
             }
             br = idCheck(br, 38);
             br = procedureTypeCheck(br);
@@ -48,11 +47,11 @@ public class Procedure extends Type {
                 list.clear();
                 br = idCheck(br, 37);
                 br = idCheck(br, 43);
-                list.add(string);
+                list.add(limitWordCount(string));
                 while (hasOption(br, 41)) {
                     br = idCheck(br, 41);
                     br = idCheck(br, 43);
-                    list.add(string);
+                    list.add(limitWordCount(string));
                 }
                 br = idCheck(br, 38);
                 br = procedureTypeCheck(br);

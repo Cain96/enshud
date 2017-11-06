@@ -1,7 +1,7 @@
 package enshud.s4.compiler.Helper.Output;
 
 public class Calculation {
-    private Write write;
+    public Write write;
     static int branch = 0;
 
     public Calculation(Write write) {

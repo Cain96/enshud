@@ -13,6 +13,8 @@ import java.io.IOException;
  */
 public class FileRead {
 
+    public static Output output;
+
     public void fileRead(String inputFileName, String outputFileName) {
 
         FileReader fr;
@@ -20,8 +22,8 @@ public class FileRead {
         try {
             fr = new FileReader(inputFileName);
             br = new BufferedReader(fr);
-            Output output = new Output(outputFileName);
-            SyntaxCheck syntaxCheck = new SyntaxCheck(output);
+            output = new Output(outputFileName);
+            SyntaxCheck syntaxCheck = new SyntaxCheck();
 
             String line;
             line = br.readLine();
