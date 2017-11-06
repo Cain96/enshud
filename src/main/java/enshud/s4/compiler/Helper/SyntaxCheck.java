@@ -18,7 +18,7 @@ public class SyntaxCheck extends Core {
     Program program;
     DeclaredVariable declaredVariable;
     Compound compoundStatement;
-    End end;
+    public static End end;
 
     public SyntaxCheck() {
         this.program = new Program();

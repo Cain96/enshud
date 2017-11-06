@@ -12,17 +12,28 @@ public class Variables {
     private ArrayList<String> functionNames;
     public Write write;
 
+
+    private static int arrayIndex = 0;
+
     public Variables(Declared declared, Write write) {
         this.declared = declared;
         this.write = write;
         this.functionNames = new ArrayList<>(declared.declaredFunctions.keySet());
     }
 
+    public static int getArrayIndex() {
+        return arrayIndex;
+    }
+
+    public static void incArrayIndex() {
+        arrayIndex++;
+    }
+
     public void store(String variable, boolean isArray) {
         write.addLine("POP", "GR1");
         int num = getVariableIndex(variable);
         write.addLine("LD", "GR2, =" + num);
-        if (isArray){
+        if (isArray) {
             write.addLine("POP", "GR3");
             write.addLine("ADDA", "GR2, GR3");
         }
@@ -35,6 +46,27 @@ public class Variables {
             write.addLine("LD", "GR2, =" + num);
             write.addLine("LD", "GR1, VAR, GR2");
             write.addLine("PUSH", "0, GR1");
+        }
+    }
+
+    public void callAllArray(String variable) {
+        int num = getVariableIndex(variable);
+        for (HashMap arrayMap : declared.declaredArrays.values()) {
+            for (Array array : new ArrayList<Array>(arrayMap.keySet())) {
+                if (array.getName().equals(variable)) {
+                    int min = array.getMin();
+                    int max = array.getMax();
+                    write.addLine("LD", "GR2, =0");
+                    write.addLabel("ARRAY" + arrayIndex);
+                    write.addLine("CPA", "GR2, =" + (max - min));
+                    write.addLine("JPL", "ENDARRAY" + arrayIndex);
+                    write.addLine("LD", "GR3, =" + num);
+                    write.addLine("ADDA", "GR3, GR2");
+                    write.addLine("LD", "GR1, VAR, GR3");
+                    write.addLine("PUSH", "0, GR1");
+                    return;
+                }
+            }
         }
     }
 

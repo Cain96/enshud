@@ -12,6 +12,8 @@ import enshud.s4.compiler.Helper.Syntax.Core.Core;
 import java.io.BufferedReader;
 
 import static enshud.s4.compiler.Helper.FileRead.output;
+import static enshud.s4.compiler.Helper.Syntax.Statement.Basic.Basic.io;
+import static enshud.s4.compiler.Helper.SyntaxCheck.end;
 
 /**
  * Created by Cain96 on 2017/09/30.
@@ -24,11 +26,16 @@ public class CalledVariableExpression extends Core {
     public int val;
 
     private boolean minus = false;
+    private boolean allArray = false;
 
     public CalledVariableExpression(Declared declared) {
         this.called = new Called(declared);
         this.operator = new Operator();
         this.declared = declared;
+    }
+
+    public boolean getAllArray(){
+        return allArray;
     }
 
     BufferedReader checkAssignedVariable(BufferedReader br, String variable, int lineNumber) {
@@ -60,10 +67,12 @@ public class CalledVariableExpression extends Core {
         /**変数のcheck**/
 
         Variables variables = new Variables(declared, new Write());
+        allArray = false;
         if ((val = called.semanticCheckCalledVariable(variable, lineNumber)) < 0) {
             return null;
         }
-        if (hasOption(br, 35)) {
+        io.setId(val);
+         if (hasOption(br, 35)) {
             br = idCheck(br, 35);
             br = checkExpression(br);
             if (!called.checkArrayIndex(val)) {
@@ -72,7 +81,10 @@ public class CalledVariableExpression extends Core {
             }
             br = idCheck(br, 36);
             variables.callArray(variable);
-        } else {
+        } else if (called.isArray) {
+            variables.callAllArray(variable);
+            allArray = true;
+        }else {
             variables.call(variable);
         }
         output.addFile(variables.write.getBuf());
@@ -198,10 +210,13 @@ public class CalledVariableExpression extends Core {
                 if (minus) {
                     string = "-" + string;
                 }
+                io.setId(id);
                 calculation.pushNum(string);
                 val = 11;
             } else if (id == 45) {
-
+                io.setId(id);
+                end.addString(string);
+                io.pushString(string.length(), end.getI()-1);
                 val = 4;
             } else if (id == 20) {
                 calculation.push("#0000");

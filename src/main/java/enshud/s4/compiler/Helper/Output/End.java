@@ -4,7 +4,7 @@ public class End extends Write {
     private static int i = 0;
 
     public End() {
-        buf += "\tRET\n";
+        buf = "\tRET\n";
         addLine("LIBBUF", "DS", "256");
     }
 
@@ -16,4 +16,10 @@ public class End extends Write {
     public void addEnd() {
         buf += "\tEND\n";
     }
+
+
+    public static int getI() {
+        return i;
+    }
+
 }

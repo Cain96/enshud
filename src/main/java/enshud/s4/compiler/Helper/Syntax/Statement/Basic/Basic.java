@@ -1,5 +1,6 @@
 package enshud.s4.compiler.Helper.Syntax.Statement.Basic;
 
+import enshud.s4.compiler.Helper.Output.IO;
 import enshud.s4.compiler.Helper.Output.Variables;
 import enshud.s4.compiler.Helper.Output.Write;
 import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
@@ -19,12 +20,14 @@ public class Basic extends Core {
     public Variables variables;
     public Declared declared;
     public Write write;
+    public static IO io;
 
     public Basic(Declared declared) {
         this.write = new Write();
         this.variables = new Variables(declared, write);
         this.calledVariableExpression = new CalledVariableExpression(declared);
         this.declared = declared;
+        this.io = new IO();
     }
 
     public BufferedReader basicStatementChecker(BufferedReader br) {
@@ -86,12 +89,15 @@ public class Basic extends Core {
             if (hasOption(br, 33)) {
                 br = idCheck(br, 33);
                 br = calledVariableExpression.checkExpression(br);
+                io.setWriteBuf(calledVariableExpression.getAllArray());
                 while (hasOption(br, 41)) {
                     br = idCheck(br, 41);
                     br = calledVariableExpression.checkExpression(br);
+                    io.setWriteBuf(calledVariableExpression.getAllArray());
                 }
                 br = idCheck(br, 34);
             }
+            io.endWrite();
         } else if (hasOption(br, 2)) {
             /**複合文のcheck**/
             Compound cs = new Compound(declared);
