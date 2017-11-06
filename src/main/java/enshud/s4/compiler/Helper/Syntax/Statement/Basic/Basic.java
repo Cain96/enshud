@@ -76,10 +76,13 @@ public class Basic extends Core {
             if (hasOption(br, 33)) {
                 br = idCheck(br, 33);
                 br = idCheck(br, 43);
-                br = calledVariableExpression.checkCalledVariable(br, string, lineNumber);
+                br = calledVariableExpression.checkAssignedVariable(br, string, lineNumber);
+                io.input(variables.getVariableIndex(string), calledVariableExpression.called.isArray);
                 while (hasOption(br, 41)) {
                     br = idCheck(br, 41);
-                    br = calledVariableExpression.checkCalledVariable(br, string, lineNumber);
+                    br = idCheck(br, 43);
+                    br = calledVariableExpression.checkAssignedVariable(br, string, lineNumber);
+                    io.input(variables.getVariableIndex(string), calledVariableExpression.called.isArray);
                 }
                 br = idCheck(br, 34);
             }

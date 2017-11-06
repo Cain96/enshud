@@ -44,6 +44,7 @@ public class CalledVariableExpression extends Core {
         if ((val = called.semanticCheckCalledVariable(variable, lineNumber)) < 0) {
             return null;
         }
+        io.setId(val);
         if (called.isArray) {
             int valTmp = val;
             if (hasOption(br, 35)) {

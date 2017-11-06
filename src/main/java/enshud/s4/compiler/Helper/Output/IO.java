@@ -7,6 +7,23 @@ import static enshud.s4.compiler.Helper.Output.Variables.incArrayIndex;
 public class IO {
     private int id;
 
+    public void input(int num, boolean isArray) {
+        Write write = new Write();
+        write.addLine("LD", "GR2, =" + num);
+        if (isArray) {
+            write.addLine("POP", "GR3");
+            write.addLine("ADDA", "GR2, GR3");
+        }
+        write.addLine("ADDA", "GR2, VAR");
+        int id = getId();
+        if (id == 4) {
+            write.addLine("CALL", "RDCH");
+        } else if (id == 11) {
+            write.addLine("CALL", "RDINT");
+        }
+        output.addFile(write.getBuf());
+    }
+
     public void setWriteBuf(boolean allArray) {
         Write write = new Write();
         int id = getId();

@@ -83,7 +83,7 @@ public class Variables {
         write.addLine("CALL", "FUNC" + num);
     }
 
-    private int getVariableIndex(String variable) {
+    public int getVariableIndex(String variable) {
         for (HashMap<String, Integer> variables : declared.declaredVariables.values()) {
             if (variables.containsKey(variable)) {
                 return variables.get(variable);
