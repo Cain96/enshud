@@ -1,7 +1,7 @@
 package enshud.s4.compiler.Helper.Output;
 
 public class Write {
-    private String buf;
+    String buf;
 
     public void addLine(String label, String order, String op) {
         if (buf != null) {

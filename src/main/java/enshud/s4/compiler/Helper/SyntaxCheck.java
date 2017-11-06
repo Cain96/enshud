@@ -57,6 +57,7 @@ public class SyntaxCheck extends Core {
             br = idCheck(br, 42);
         }
 
+        end.addEnd();
         output.addFile(end.getBuf());
 
         return br;
