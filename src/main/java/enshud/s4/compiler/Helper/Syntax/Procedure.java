@@ -30,6 +30,7 @@ public class Procedure extends Type {
         br = idCheck(br, 16);
         br = idCheck(br, 43);
         String procedureName = string;
+        declaredVariable.declared.setDeclared(declared);
         if (hasOption(br, 33)) {
             br = idCheck(br, 33);
             br = idCheck(br, 43);
@@ -40,7 +41,7 @@ public class Procedure extends Type {
                 list.add(limitWordCount(string));
             }
             br = idCheck(br, 38);
-            br = procedureTypeCheck(br);
+            br = procedureTypeCheck(br, list, declaredVariable.declared);
             /**Listをmapへ変換**/
             variables.putAll(list.stream().collect(Collectors.toMap(s -> s, i -> id)));
             while (hasOption(br, 37)) {
@@ -54,21 +55,20 @@ public class Procedure extends Type {
                     list.add(limitWordCount(string));
                 }
                 br = idCheck(br, 38);
-                br = procedureTypeCheck(br);
+                br = procedureTypeCheck(br, list, declaredVariable.declared);
                 variables.putAll(list.stream().collect(Collectors.toMap(s -> s, i -> id)));
             }
             br = idCheck(br, 34);
         }
         br = declared.addFunction(br, procedureName, variables, lineNumber);
+        br = declaredVariable.declared.addFunction(br, procedureName, variables, lineNumber);
 
         br = idCheck(br, 37);
 
         /** 変数宣言のcheck **/
         if (hasOption(br, 21)) {
-            br = declaredVariable.checkDeclaredVariable(br);
+            br = checkProcedureDeclaredVariable(br);
         }
-
-        declaredVariable.declared.setDeclared(declared);
 
         /** 複合文のcheck **/
         br = compoundStatement.checkCompoundStatement(br);
@@ -82,5 +82,36 @@ public class Procedure extends Type {
             str = str.substring(0, 9);
         }
         return str;
+    }
+
+    private BufferedReader checkProcedureDeclaredVariable(BufferedReader br){
+        ArrayList<String> variables = new ArrayList<>();
+
+        br = idCheck(br, 21);
+        br = idCheck(br, 43);
+        variables.add(limitWordCount(string));
+        while (hasOption(br, 41)) {
+            br = idCheck(br, 41);
+            br = idCheck(br, 43);
+            variables.add(limitWordCount(string));
+        }
+        br = idCheck(br, 38);
+        br = procedureTypeCheck(br, variables, declaredVariable.declared);
+        br = idCheck(br, 37);
+
+        while (hasOption(br, 43)) {
+            variables.clear();
+            br = idCheck(br, 43);
+            variables.add(limitWordCount(string));
+            while (hasOption(br, 41)) {
+                br = idCheck(br, 41);
+                br = idCheck(br, 43);
+                variables.add(limitWordCount(string));
+            }
+            br = idCheck(br, 38);
+            br = procedureTypeCheck(br, variables, declaredVariable.declared);
+            br = idCheck(br, 37);
+        }
+        return br;
     }
 }

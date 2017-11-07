@@ -48,6 +48,12 @@ public class Declared {
                     return null;
                 }
             }
+            addProcedureVariables(id, newVariables);
+        }
+        return br;
+    }
+
+    public void addProcedureVariables(int id, ArrayList<String> newVariables) {
             Map<String, Integer> variablesHash = newVariables.stream()
                     .collect(Collectors.toMap(
                             s -> s,
@@ -57,8 +63,6 @@ public class Declared {
             if (variables != null) {
                 variables.putAll(variablesHash);
             }
-        }
-        return br;
     }
 
     public BufferedReader addArray(BufferedReader br, int id, Array newVariables, int lineNumber) {
@@ -66,13 +70,17 @@ public class Declared {
             if (!checkDuplicateVariables(newVariables.getName(), lineNumber)) {
                 return null;
             }
-            HashMap variables = declaredArrays.get(id);
-            if (variables != null) {
-                variables.put(newVariables, index);
-                index += newVariables.getMax();
-            }
+            addProcedureArray(id, newVariables);
         }
         return br;
+    }
+
+    public void addProcedureArray(int id, Array newVariables){
+        HashMap variables = declaredArrays.get(id);
+        if (variables != null) {
+            variables.put(newVariables, index);
+            index += newVariables.getMax() - newVariables.getMin();
+        }
     }
 
     public BufferedReader addFunction(BufferedReader br, String name, LinkedHashMap<String, Integer> variables, int lineNumber) {

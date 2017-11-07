@@ -28,7 +28,6 @@ public class SyntaxCheck extends Core {
     }
 
     BufferedReader syntaxCheck(String line, BufferedReader br) {
-
         /** programのcheck **/
         getElements(line);
 
