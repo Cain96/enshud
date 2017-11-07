@@ -34,12 +34,11 @@ public class FileRead {
                 System.out.println("OK");
             }
             output.closeFile();
+            CaslSimulator.appendLibcas(outputFileName);
         } catch (FileNotFoundException e) {
             System.err.println("File not found");
         } catch (IOException e) {
             System.err.println("File not found");
         }
-
-        CaslSimulator.appendLibcas(outputFileName);
     }
 }
