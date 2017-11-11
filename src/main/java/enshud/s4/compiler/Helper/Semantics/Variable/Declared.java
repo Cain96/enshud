@@ -54,15 +54,15 @@ public class Declared {
     }
 
     public void addProcedureVariables(int id, ArrayList<String> newVariables) {
-            Map<String, Integer> variablesHash = newVariables.stream()
-                    .collect(Collectors.toMap(
-                            s -> s,
-                            s -> index++
-                    ));
-            HashMap<String, Integer> variables = declaredVariables.get(id);
-            if (variables != null) {
-                variables.putAll(variablesHash);
-            }
+        Map<String, Integer> variablesHash = newVariables.stream()
+                .collect(Collectors.toMap(
+                        s -> s,
+                        s -> index++
+                ));
+        HashMap<String, Integer> variables = declaredVariables.get(id);
+        if (variables != null) {
+            variables.putAll(variablesHash);
+        }
     }
 
     public BufferedReader addArray(BufferedReader br, int id, Array newVariables, int lineNumber) {
@@ -70,17 +70,13 @@ public class Declared {
             if (!checkDuplicateVariables(newVariables.getName(), lineNumber)) {
                 return null;
             }
-            addProcedureArray(id, newVariables);
+            HashMap variables = declaredArrays.get(id);
+            if (variables != null) {
+                variables.put(newVariables, index);
+                index += newVariables.getMax() - newVariables.getMin();
+            }
         }
         return br;
-    }
-
-    public void addProcedureArray(int id, Array newVariables){
-        HashMap variables = declaredArrays.get(id);
-        if (variables != null) {
-            variables.put(newVariables, index);
-            index += newVariables.getMax() - newVariables.getMin();
-        }
     }
 
     public BufferedReader addFunction(BufferedReader br, String name, LinkedHashMap<String, Integer> variables, int lineNumber) {
@@ -120,5 +116,9 @@ public class Declared {
             }
         }
         return false;
+    }
+
+    public static String getIndex() {
+        return "" + index;
     }
 }

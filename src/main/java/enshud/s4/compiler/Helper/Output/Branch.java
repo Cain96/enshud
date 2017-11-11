@@ -9,7 +9,8 @@ public class Branch {
     public void addIf() {
         Write write = new Write();
         write.addLine("POP", "GR2");
-        write.addLine("XOR", "GR2, =#0000");
+        write.addLine("LAD", "GR1, #0000");
+        write.addLine("XOR", "GR2, GR1");
         write.addLine("JNZ", "IF" + branch);
         output.addFile(write.getBuf());
     }
@@ -44,7 +45,8 @@ public class Branch {
     public void addWhile() {
         Write write = new Write();
         write.addLine("POP", "GR2");
-        write.addLine("XOR", "GR2, #=0000");
+        write.addLine("LAD", "GR1, #0000");
+        write.addLine("XOR", "GR2, GR1");
         write.addLine("JNZ", "WHLEND" + branch);
         output.addFile(write.getBuf());
     }

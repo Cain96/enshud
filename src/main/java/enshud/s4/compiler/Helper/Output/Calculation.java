@@ -53,16 +53,17 @@ public class Calculation {
 
     public void not() {
         write.addLine("POP", "GR2");
-        write.addLine("XOR", "GR2, =#FFFF");
+        write.addLine("LAD", "GR1, #FFFF");
+        write.addLine("XOR", "GR2, GR1");
         write.addLine("PUSH", "0, GR2");
     }
 
     public void equal() {
         relateHelp();
         write.addLine("JZE", "EQUAL" + branch);
-        write.addLine("LD", "GR1, =#FFFF");
+        write.addLine("LAD", "GR1, #FFFF");
         write.addLine("JUMP", "ALL" + branch);
-        write.addLine("EQUAL" + branch, "LD", "GR1, =#0000");
+        write.addLine("EQUAL" + branch, "LAD", "GR1, #0000");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
         branch++;
     }
@@ -70,49 +71,49 @@ public class Calculation {
     public void notEqual() {
         relateHelp();
         write.addLine("JNZ", "NEQUAL" + branch);
-        write.addLine("LD", "GR1, =#FFFF");
+        write.addLine("LAD", "GR1, #FFFF");
         write.addLine("JUMP", "ALL" + branch);
-        write.addLine("NEQUAL" + branch, "LD", "GR1, =#0000");
+        write.addLine("NEQUAL" + branch, "LAD", "GR1, #0000");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
         branch++;
     }
 
     public void moreThan() {
         relateHelp();
-        write.addLine("JPL", "MORE" + branch);
-        write.addLine("LD", "GR1, =#FFFF");
+        write.addLine("JMI", "MORE" + branch);
+        write.addLine("LAD", "GR1, #FFFF");
         write.addLine("JUMP", "ALL" + branch);
-        write.addLine("MORE" + branch, "LD", "GR1, =#0000");
+        write.addLine("MORE" + branch, "LAD", "GR1, #0000");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
         branch++;
     }
 
     public void above() {
         relateHelp();
-        write.addLine("JMI", "ABOVE" + branch);
-        write.addLine("LD", "GR1, =#0000");
+        write.addLine("JPL", "ABOVE" + branch);
+        write.addLine("LAD", "GR1, #0000");
         write.addLine("JUMP", "ALL" + branch);
-        write.addLine("ABOVE" + branch, "LD", "GR1, =#FFFF");
+        write.addLine("ABOVE" + branch, "LAD", "GR1, #FFFF");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
         branch++;
     }
 
     public void below() {
         relateHelp();
-        write.addLine("JPL", "BELOW" + branch);
-        write.addLine("LD", "GR1, =#0000");
+        write.addLine("JMI", "BELOW" + branch);
+        write.addLine("LAD", "GR1, #0000");
         write.addLine("JUMP", "ALL" + branch);
-        write.addLine("BELOW" + branch, "LD", "GR1, =#FFFF");
+        write.addLine("BELOW" + branch, "LAD", "GR1, #FFFF");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
         branch++;
     }
 
     public void lessThan() {
         relateHelp();
-        write.addLine("JMI", "LESS" + branch);
-        write.addLine("LD", "GR1, =#FFFF");
+        write.addLine("JPL", "LESS" + branch);
+        write.addLine("LAD", "GR1, #FFFF");
         write.addLine("JUMP", "ALL" + branch);
-        write.addLine("LESS" + branch, "LD", "GR1, =#0000");
+        write.addLine("LESS" + branch, "LAD", "GR1, #0000");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
         branch++;
     }

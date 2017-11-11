@@ -20,6 +20,7 @@ public class SyntaxCheck extends Core {
     Compound compoundStatement;
     public static End end;
 
+
     public SyntaxCheck() {
         this.program = new Program();
         this.declaredVariable = new DeclaredVariable();
@@ -46,9 +47,11 @@ public class SyntaxCheck extends Core {
         /** 副プログラムのcheck **/
         while (hasOption(br, 16) && (br != null)) {
             br = new Procedure(declaredVariable.declared).checkProcedure(br);
+            output.addFile("\tRET\n");
         }
 
         /** 複合文のcheck **/
+        output.addFile("MAIN\tNOP\n");
         if (br != null) {
             br = compoundStatement.checkCompoundStatement(br);
         }

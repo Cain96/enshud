@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class Variables {
     private Declared declared;
-    private ArrayList<String> functionNames;
     public Write write;
 
 
@@ -18,7 +17,6 @@ public class Variables {
     public Variables(Declared declared, Write write) {
         this.declared = declared;
         this.write = write;
-        this.functionNames = new ArrayList<>(declared.declaredFunctions.keySet());
     }
 
     public static int getArrayIndex() {
@@ -58,7 +56,7 @@ public class Variables {
                     int max = array.getMax();
                     write.addLine("LD", "GR2, =0");
                     write.addLabel("ARRAY" + arrayIndex);
-                    write.addLine("CPA", "GR2, =" + (max - min));
+                    write.addLine("CPA", "GR2, " + (max - min));
                     write.addLine("JPL", "ENDARRAY" + arrayIndex);
                     write.addLine("LD", "GR3, =" + num);
                     write.addLine("ADDA", "GR3, GR2");
@@ -79,8 +77,7 @@ public class Variables {
     }
 
     public void callFunction(String variable) {
-        int num = functionNames.indexOf(variable);
-        write.addLine("CALL", "FUNC" + num);
+        write.addLine("CALL", variable.toUpperCase());
     }
 
     public int getVariableIndex(String variable) {
@@ -97,7 +94,6 @@ public class Variables {
                 }
             }
         }
-
         return -1;
     }
 

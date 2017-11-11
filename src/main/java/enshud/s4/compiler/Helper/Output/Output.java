@@ -20,6 +20,7 @@ public class Output {
         writeFile("CASL", "START", "BEGIN");
         writeFile("BEGIN", "LAD", "GR6, 0");
         writeFile("LAD", "GR7, LIBBUF");
+        writeFile("JUMP", "MAIN");
     }
 
     public void writeFile(String label, String order, String op) {

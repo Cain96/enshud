@@ -34,7 +34,7 @@ public class CalledVariableExpression extends Core {
         this.declared = declared;
     }
 
-    public boolean getAllArray(){
+    public boolean getAllArray() {
         return allArray;
     }
 
@@ -73,7 +73,7 @@ public class CalledVariableExpression extends Core {
             return null;
         }
         io.setId(val);
-         if (hasOption(br, 35)) {
+        if (hasOption(br, 35)) {
             br = idCheck(br, 35);
             br = checkExpression(br);
             if (!called.checkArrayIndex(val)) {
@@ -85,7 +85,7 @@ public class CalledVariableExpression extends Core {
         } else if (called.isArray) {
             variables.callAllArray(variable);
             allArray = true;
-        }else {
+        } else {
             variables.call(variable);
         }
         output.addFile(variables.write.getBuf());
@@ -217,7 +217,7 @@ public class CalledVariableExpression extends Core {
             } else if (id == 45) {
                 io.setId(id);
                 end.addString(string);
-                io.pushString(string.length(), end.getI()-1);
+                io.pushString(string.length() - 2, end.getI() - 1);
                 val = 4;
             } else if (id == 20) {
                 calculation.push("#0000");

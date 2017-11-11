@@ -14,7 +14,8 @@ public class IO {
             write.addLine("POP", "GR3");
             write.addLine("ADDA", "GR2, GR3");
         }
-        write.addLine("ADDA", "GR2, VAR");
+        write.addLine("LAD", "GR1, VAR");
+        write.addLine("ADDA", "GR2, GR1");
         int id = getId();
         if (id == 4) {
             write.addLine("CALL", "RDCH");

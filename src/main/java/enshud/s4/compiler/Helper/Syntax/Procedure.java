@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
+import static enshud.s4.compiler.Helper.FileRead.output;
+
 /**
  * Created by Cain96 on 2017/09/30.
  */
@@ -30,6 +32,7 @@ public class Procedure extends Type {
         br = idCheck(br, 16);
         br = idCheck(br, 43);
         String procedureName = string;
+        output.addFile(procedureName.toUpperCase() + "\tNOP\n");
         declaredVariable.declared.setDeclared(declared);
         if (hasOption(br, 33)) {
             br = idCheck(br, 33);
@@ -84,7 +87,7 @@ public class Procedure extends Type {
         return str;
     }
 
-    private BufferedReader checkProcedureDeclaredVariable(BufferedReader br){
+    private BufferedReader checkProcedureDeclaredVariable(BufferedReader br) {
         ArrayList<String> variables = new ArrayList<>();
 
         br = idCheck(br, 21);

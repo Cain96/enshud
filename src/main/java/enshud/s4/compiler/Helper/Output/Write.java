@@ -19,7 +19,7 @@ public class Write {
         }
     }
 
-    void addLabel(String label) {
+    public void addLabel(String label) {
         if (buf != null) {
             buf += label + "\tNOP\n";
         } else {
