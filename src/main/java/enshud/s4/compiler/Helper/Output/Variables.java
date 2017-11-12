@@ -38,6 +38,17 @@ public class Variables {
         write.addLine("ST", "GR1, VAR, GR2");
     }
 
+    public void store(String variable, boolean isArray, Declared declared) {
+        write.addLine("POP", "GR1");
+        int num = getVariableIndex(variable, declared);
+        write.addLine("LD", "GR2, =" + num);
+        if (isArray) {
+            write.addLine("POP", "GR3");
+            write.addLine("ADDA", "GR2, GR3");
+        }
+        write.addLine("ST", "GR1, VAR, GR2");
+    }
+
     public void call(String variable) {
         int num;
         if ((num = getVariableIndex(variable)) >= 0) {
@@ -81,6 +92,23 @@ public class Variables {
     }
 
     public int getVariableIndex(String variable) {
+        for (HashMap<String, Integer> variables : declared.declaredVariables.values()) {
+            if (variables.containsKey(variable)) {
+                return variables.get(variable);
+            }
+        }
+
+        for (HashMap<Array, Integer> variables : declared.declaredArrays.values()) {
+            for (Map.Entry<Array, Integer> entry : variables.entrySet()) {
+                if (entry.getKey().getName().equals(variable)) {
+                    return entry.getValue();
+                }
+            }
+        }
+        return -1;
+    }
+
+    private int getVariableIndex(String variable, Declared declared) {
         for (HashMap<String, Integer> variables : declared.declaredVariables.values()) {
             if (variables.containsKey(variable)) {
                 return variables.get(variable);

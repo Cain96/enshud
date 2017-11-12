@@ -1,6 +1,7 @@
 package enshud.s4.compiler.Helper;
 
 import enshud.s4.compiler.Helper.Output.End;
+import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
 import enshud.s4.compiler.Helper.Syntax.Core.Core;
 import enshud.s4.compiler.Helper.Syntax.DeclaredVariable;
 import enshud.s4.compiler.Helper.Syntax.Procedure;
@@ -8,6 +9,7 @@ import enshud.s4.compiler.Helper.Syntax.Program;
 import enshud.s4.compiler.Helper.Syntax.Statement.Compound;
 
 import java.io.BufferedReader;
+import java.util.HashMap;
 
 import static enshud.s4.compiler.Helper.FileRead.output;
 
@@ -19,6 +21,7 @@ public class SyntaxCheck extends Core {
     DeclaredVariable declaredVariable;
     Compound compoundStatement;
     public static End end;
+    public static HashMap<String, Declared> functionHash;
 
 
     public SyntaxCheck() {
@@ -26,6 +29,7 @@ public class SyntaxCheck extends Core {
         this.declaredVariable = new DeclaredVariable();
         this.compoundStatement = new Compound(declaredVariable.declared);
         this.end = new End();
+        this.functionHash = new HashMap<>();
     }
 
     BufferedReader syntaxCheck(String line, BufferedReader br) {

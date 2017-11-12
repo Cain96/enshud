@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 import static enshud.s4.compiler.Helper.FileRead.output;
+import static enshud.s4.compiler.Helper.SyntaxCheck.functionHash;
 
 /**
  * Created by Cain96 on 2017/09/30.
@@ -72,6 +73,8 @@ public class Procedure extends Type {
         if (hasOption(br, 21)) {
             br = checkProcedureDeclaredVariable(br);
         }
+
+        functionHash.put(procedureName, declaredVariable.declared);
 
         /** 複合文のcheck **/
         br = compoundStatement.checkCompoundStatement(br);
