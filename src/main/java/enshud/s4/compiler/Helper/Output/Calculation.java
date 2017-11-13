@@ -10,14 +10,14 @@ public class Calculation {
 
     public void add() {
         calculateHelp();
-        write.addLine("ADDA", "GR2, GR1");
-        write.addLine("PUSH", "0, GR2");
+        write.addLine("ADDA", "GR1, GR2");
+        write.addLine("PUSH", "0, GR1");
     }
 
     public void sub() {
         calculateHelp();
-        write.addLine("SUBA", "GR2, GR1");
-        write.addLine("PUSH", "0, GR2");
+        write.addLine("SUBA", "GR1, GR2");
+        write.addLine("PUSH", "0, GR1");
     }
 
     public void mult() {
