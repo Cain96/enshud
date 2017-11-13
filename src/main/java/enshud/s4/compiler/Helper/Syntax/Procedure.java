@@ -8,7 +8,6 @@ import enshud.s4.compiler.Helper.Syntax.Statement.Compound;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.stream.Collectors;
 
 import static enshud.s4.compiler.Helper.FileRead.output;
 import static enshud.s4.compiler.Helper.SyntaxCheck.functionHash;
@@ -50,7 +49,9 @@ public class Procedure extends Type {
             br = idCheck(br, 38);
             br = procedureTypeCheck(br, list, declaredVariable.declared);
             /**Listをmapへ変換**/
-            variables.putAll(list.stream().collect(Collectors.toMap(s -> s, i -> id)));
+            for (String arg : list){
+                variables.put(arg, id);
+            }
             while (hasOption(br, 37)) {
                 list.clear();
                 br = idCheck(br, 37);
@@ -63,7 +64,9 @@ public class Procedure extends Type {
                 }
                 br = idCheck(br, 38);
                 br = procedureTypeCheck(br, list, declaredVariable.declared);
-                variables.putAll(list.stream().collect(Collectors.toMap(s -> s, i -> id)));
+                for (String arg : list){
+                    variables.put(arg, id);
+                }
             }
             br = idCheck(br, 34);
         }
