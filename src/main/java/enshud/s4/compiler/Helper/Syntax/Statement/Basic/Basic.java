@@ -79,7 +79,7 @@ public class Basic extends Core {
                 Collections.reverse(arguments);
                 /** 逆順にpushされるので、その対策 **/
                 for (Argument argument : arguments){
-                    variables.store(argument.getName(), argument.isArray(), functionHash.get(variableName));
+                    variables.store(argument.getName(), argument.isArray(), functionHash.get(variableName).getDeclared());
                 }
                 br = idCheck(br, 34);
                 variables.callFunction(variableName);
@@ -94,7 +94,12 @@ public class Basic extends Core {
                     System.err.println("Semantic error: line " + lineNumber);
                     return null;
                 }
+                if (prev == 4){
+                    variables.changeChar();
+                }
                 variables.store(variableName, isArray);
+            } else {
+                variables.callFunction(variableName);
             }
         } else if (hasOption(br, 18)) {
             /**入力文のcheck**/

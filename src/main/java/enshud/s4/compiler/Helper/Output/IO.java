@@ -39,7 +39,7 @@ public class IO {
             write.addLine("POP", "GR2");
             write.addLine("CALL", "WRTINT");
         }
-        if (allArray){
+        if (allArray) {
             write.addLine("ADDA", "GR2, =1");
             write.addLine("JUMP", "ARRAY" + getArrayIndex());
             write.addLabel("ENDARRAY" + getArrayIndex());

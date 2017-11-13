@@ -1,5 +1,6 @@
 package enshud.s4.compiler.Helper.Syntax;
 
+import enshud.s4.compiler.Helper.Semantics.Function;
 import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
 import enshud.s4.compiler.Helper.Syntax.Core.Type;
 import enshud.s4.compiler.Helper.Syntax.Statement.Compound;
@@ -33,7 +34,9 @@ public class Procedure extends Type {
         br = idCheck(br, 16);
         br = idCheck(br, 43);
         String procedureName = string;
-        output.addFile(procedureName.toUpperCase() + "\tNOP\n");
+        Function function = new Function(declaredVariable.declared);
+        functionHash.put(procedureName, function);
+        output.addFile("FUNC" + function.getIndex() + "\tNOP\n");
         declaredVariable.declared.setDeclared(declared);
         if (hasOption(br, 33)) {
             br = idCheck(br, 33);
@@ -73,8 +76,6 @@ public class Procedure extends Type {
         if (hasOption(br, 21)) {
             br = checkProcedureDeclaredVariable(br);
         }
-
-        functionHash.put(procedureName, declaredVariable.declared);
 
         /** 複合文のcheck **/
         br = compoundStatement.checkCompoundStatement(br);

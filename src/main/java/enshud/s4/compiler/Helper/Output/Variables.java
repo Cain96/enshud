@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static enshud.s4.compiler.Helper.SyntaxCheck.functionHash;
+
 public class Variables {
     private Declared declared;
     public Write write;
+    private Array array;
 
 
     private static int arrayIndex = 0;
@@ -25,6 +28,12 @@ public class Variables {
 
     public static void incArrayIndex() {
         arrayIndex++;
+    }
+
+    public void changeChar(){
+        write.addLine("POP", "GR3");
+        write.addLine("LD", "GR2, 0, GR3");
+        write.addLine("PUSH", "0, GR2");
     }
 
     public void store(String variable, boolean isArray) {
@@ -81,14 +90,19 @@ public class Variables {
 
     public void callArray(String variable) {
         int num = getVariableIndex(variable);
-        write.addLine("LD", "GR2, =" + num);
+        write.addLine("LD", "GR2, =" + (num - array.getMin()));
         write.addLine("POP", "GR1");
         write.addLine("ADDA", "GR2, GR1");
         write.addLine("LD", "GR1, VAR, GR2");
     }
 
     public void callFunction(String variable) {
-        write.addLine("CALL", variable.toUpperCase());
+        try {
+            int index = functionHash.get(variable).getIndex();
+            write.addLine("CALL", "FUNC" + index);
+        } catch (NullPointerException e){
+
+        }
     }
 
     public int getVariableIndex(String variable) {
@@ -101,6 +115,7 @@ public class Variables {
         for (HashMap<Array, Integer> variables : declared.declaredArrays.values()) {
             for (Map.Entry<Array, Integer> entry : variables.entrySet()) {
                 if (entry.getKey().getName().equals(variable)) {
+                    array = entry.getKey();
                     return entry.getValue();
                 }
             }

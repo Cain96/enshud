@@ -1,7 +1,7 @@
 package enshud.s4.compiler.Helper;
 
 import enshud.s4.compiler.Helper.Output.End;
-import enshud.s4.compiler.Helper.Semantics.Variable.Declared;
+import enshud.s4.compiler.Helper.Semantics.Function;
 import enshud.s4.compiler.Helper.Syntax.Core.Core;
 import enshud.s4.compiler.Helper.Syntax.DeclaredVariable;
 import enshud.s4.compiler.Helper.Syntax.Procedure;
@@ -21,7 +21,7 @@ public class SyntaxCheck extends Core {
     DeclaredVariable declaredVariable;
     Compound compoundStatement;
     public static End end;
-    public static HashMap<String, Declared> functionHash;
+    public static HashMap<String, Function> functionHash;
 
 
     public SyntaxCheck() {

@@ -73,7 +73,7 @@ public class Declared {
             HashMap variables = declaredArrays.get(id);
             if (variables != null) {
                 variables.put(newVariables, index);
-                index += newVariables.getMax() - newVariables.getMin();
+                index += newVariables.getMax() - newVariables.getMin() + 1;
             }
         }
         return br;
