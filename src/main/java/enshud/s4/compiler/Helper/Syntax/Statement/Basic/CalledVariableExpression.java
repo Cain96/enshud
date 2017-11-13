@@ -25,7 +25,6 @@ public class CalledVariableExpression extends Core {
     Declared declared;
     public int val;
 
-    private boolean minus = false;
     private boolean allArray = false;
 
     public CalledVariableExpression(Declared declared) {
@@ -134,7 +133,7 @@ public class CalledVariableExpression extends Core {
 
     private BufferedReader checkSimpleExpression(BufferedReader br, Calculation calculation) {
         /**単純式のcheck**/
-        minus = false;
+        boolean minus = false;
         if (hasOption(br, new Integer[]{30, 31})) {
             /**符号**/
             br = idCheck(br, new Integer[]{30, 31});
@@ -143,6 +142,9 @@ public class CalledVariableExpression extends Core {
             }
         }
         br = checkTerm(br, calculation);
+        if (minus){
+            calculation.minus();
+        }
         int prev = val;
         while (hasOption(br, new Integer[]{15, 30, 31})) {/**加法演算子**/
             br = idCheck(br, new Integer[]{15, 30, 31});
@@ -209,9 +211,6 @@ public class CalledVariableExpression extends Core {
             /**定数**/
             br = idCheck(br, new Integer[]{9, 20, 44, 45});
             if (id == 44) {
-                if (minus) {
-                    string = "-" + string;
-                }
                 io.setId(id);
                 calculation.pushNum(string);
                 val = 11;

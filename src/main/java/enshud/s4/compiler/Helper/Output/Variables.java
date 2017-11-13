@@ -79,7 +79,7 @@ public class Variables {
                     write.addLine("LD", "GR2, =0");
                     write.addLabel("ARRAY" + arrayIndex);
                     write.addLine("CPA", "GR2, " + (max - min));
-                    write.addLine("JPL", "ENDARRAY" + arrayIndex);
+                    write.addLine("JPL", "EARRAY" + arrayIndex);
                     write.addLine("LD", "GR3, =" + num);
                     write.addLine("ADDA", "GR3, GR2");
                     write.addLine("LD", "GR1, VAR, GR3");

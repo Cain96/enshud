@@ -8,6 +8,13 @@ public class Calculation {
         this.write = write;
     }
 
+    public void minus(){
+        write.addLine("POP", "GR1");
+        write.addLine("XOR", "GR1, =#FFFF");
+        write.addLine("ADDL", "GR1, =1");
+        write.addLine("PUSH", "0, GR1");
+    }
+
     public void add() {
         calculateHelp();
         write.addLine("ADDA", "GR1, GR2");
@@ -53,8 +60,7 @@ public class Calculation {
 
     public void not() {
         write.addLine("POP", "GR2");
-        write.addLine("LAD", "GR1, #FFFF");
-        write.addLine("XOR", "GR2, GR1");
+        write.addLine("XOR", "GR2, =#FFFF");
         write.addLine("PUSH", "0, GR2");
     }
 

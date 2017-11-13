@@ -42,7 +42,7 @@ public class IO {
         if (allArray) {
             write.addLine("ADDA", "GR2, =1");
             write.addLine("JUMP", "ARRAY" + getArrayIndex());
-            write.addLabel("ENDARRAY" + getArrayIndex());
+            write.addLabel("EARRAY" + getArrayIndex());
             incArrayIndex();
         }
         output.addFile(write.getBuf());
