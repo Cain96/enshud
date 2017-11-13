@@ -30,7 +30,7 @@ public class Variables {
         arrayIndex++;
     }
 
-    public void changeChar(){
+    public void changeChar() {
         write.addLine("POP", "GR3");
         write.addLine("LD", "GR2, 0, GR3");
         write.addLine("PUSH", "0, GR2");
@@ -39,10 +39,12 @@ public class Variables {
     public void store(String variable, boolean isArray) {
         write.addLine("POP", "GR1");
         int num = getVariableIndex(variable);
-        write.addLine("LD", "GR2, =" + num);
         if (isArray) {
+            write.addLine("LD", "GR2, =" + (num - array.getMin()));
             write.addLine("POP", "GR3");
             write.addLine("ADDA", "GR2, GR3");
+        } else {
+            write.addLine("LD", "GR2, =" + num);
         }
         write.addLine("ST", "GR1, VAR, GR2");
     }
@@ -94,13 +96,14 @@ public class Variables {
         write.addLine("POP", "GR1");
         write.addLine("ADDA", "GR2, GR1");
         write.addLine("LD", "GR1, VAR, GR2");
+        write.addLine("PUSH", "0, GR1");
     }
 
     public void callFunction(String variable) {
         try {
             int index = functionHash.get(variable).getIndex();
             write.addLine("CALL", "FUNC" + index);
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
 
         }
     }

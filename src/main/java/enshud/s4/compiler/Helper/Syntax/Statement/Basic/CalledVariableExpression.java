@@ -60,6 +60,7 @@ public class CalledVariableExpression extends Core {
                 return null;
             }
             val = valTmp;
+            called.isArray = true;
         }
         return br;
     }
