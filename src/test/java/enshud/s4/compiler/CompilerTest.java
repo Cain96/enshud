@@ -1,12 +1,6 @@
 package enshud.s4.compiler;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-
+import enshud.casl.CaslSimulator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -16,8 +10,12 @@ import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 import org.junit.rules.Timeout;
 import org.junit.runners.MethodSorters;
 
-import enshud.casl.CaslSimulator;
-import enshud.s4.compiler.Compiler;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * !!! このコードは編集禁止 !!!
@@ -256,6 +254,12 @@ public class CompilerTest {
 	public void testSemerr08() {
 		new Compiler().run("data/ts/semerr08.ts", TMP_OUT_CAS);
 		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 34");
+	}
+
+	@Test
+	public void testSemerr09() {
+		new Compiler().run("data/ts/semerr09.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 31");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////

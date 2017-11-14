@@ -13,9 +13,11 @@ public class Operator {
 
     public int check(int prev, int mid, int follow) {
         if (prev == follow) {
-            if (arithmeticList.contains(mid)) {
+            if (arithmeticList.contains(mid) && prev == INT) {
                 return INT;
-            } else if (logicList.contains(mid) || relationList.contains(mid)) {
+            } else if (logicList.contains(mid) && prev == BOOL) {
+                return BOOL;
+            }else if (relationList.contains(mid)){
                 return BOOL;
             } else if (mid == EQUAL) {
                 return EQUAL;
