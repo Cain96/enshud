@@ -1,148 +1,170 @@
 package enshud.s4.compiler.Helper.Output;
 
+import static enshud.s4.compiler.Helper.FileRead.output;
+
 public class Calculation {
-    public Write write;
     static int branch = 0;
 
-    public Calculation(Write write) {
-        this.write = write;
+    public Calculation() {
     }
 
     public void minus(){
+        Write write = new Write();
         write.addLine("POP", "GR1");
         write.addLine("XOR", "GR1, =#FFFF");
         write.addLine("ADDL", "GR1, =1");
         write.addLine("PUSH", "0, GR1");
+        output.addFile(write.getBuf());
     }
 
     public void add() {
-        calculateHelp();
+        Write write = calculateHelp();
         write.addLine("ADDA", "GR1, GR2");
         write.addLine("PUSH", "0, GR1");
+        output.addFile(write.getBuf());
     }
 
     public void sub() {
-        calculateHelp();
+        Write write = calculateHelp();
         write.addLine("SUBA", "GR1, GR2");
         write.addLine("PUSH", "0, GR1");
+        output.addFile(write.getBuf());
     }
 
     public void mult() {
-        calculateHelp();
+        Write write = calculateHelp();
         write.addLine("CALL", "MULT");
         write.addLine("PUSH", "0, GR2");
+        output.addFile(write.getBuf());
     }
 
     public void div() {
-        calculateHelp();
+        Write write = calculateHelp();
         write.addLine("CALL", "DIV");
         write.addLine("PUSH", "0, GR2");
+        output.addFile(write.getBuf());
     }
 
     public void mod() {
-        calculateHelp();
+        Write write = calculateHelp();
         write.addLine("CALL", "DIV");
         write.addLine("PUSH", "0, GR1");
+        output.addFile(write.getBuf());
     }
 
     public void and() {
-        calculateHelp();
+        Write write = calculateHelp();
         write.addLine("AND", "GR2, GR1");
         write.addLine("PUSH", "0, GR2");
+        output.addFile(write.getBuf());
     }
 
     public void or() {
-        calculateHelp();
+        Write write = calculateHelp();
         write.addLine("OR", "GR2, GR1");
         write.addLine("PUSH", "0, GR2");
+        output.addFile(write.getBuf());
     }
 
 
     public void not() {
+        Write write = new Write();
         write.addLine("POP", "GR2");
         write.addLine("XOR", "GR2, =#FFFF");
         write.addLine("PUSH", "0, GR2");
+        output.addFile(write.getBuf());
     }
 
     public void equal() {
-        relateHelp();
+        Write write = relateHelp();
         write.addLine("JZE", "EQUAL" + branch);
         write.addLine("LAD", "GR1, #FFFF");
         write.addLine("JUMP", "ALL" + branch);
         write.addLine("EQUAL" + branch, "LAD", "GR1, #0000");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
+        output.addFile(write.getBuf());
         branch++;
     }
 
     public void notEqual() {
-        relateHelp();
+        Write write = relateHelp();
         write.addLine("JNZ", "NEQUAL" + branch);
         write.addLine("LAD", "GR1, #FFFF");
         write.addLine("JUMP", "ALL" + branch);
         write.addLine("NEQUAL" + branch, "LAD", "GR1, #0000");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
+        output.addFile(write.getBuf());
         branch++;
     }
 
     public void moreThan() {
-        relateHelp();
+        Write write = relateHelp();
         write.addLine("JMI", "MORE" + branch);
         write.addLine("LAD", "GR1, #FFFF");
         write.addLine("JUMP", "ALL" + branch);
         write.addLine("MORE" + branch, "LAD", "GR1, #0000");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
+        output.addFile(write.getBuf());
         branch++;
     }
 
     public void above() {
-        relateHelp();
+        Write write = relateHelp();
         write.addLine("JPL", "ABOVE" + branch);
         write.addLine("LAD", "GR1, #0000");
         write.addLine("JUMP", "ALL" + branch);
         write.addLine("ABOVE" + branch, "LAD", "GR1, #FFFF");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
+        output.addFile(write.getBuf());
         branch++;
     }
 
     public void below() {
-        relateHelp();
+        Write write = relateHelp();
         write.addLine("JMI", "BELOW" + branch);
         write.addLine("LAD", "GR1, #0000");
         write.addLine("JUMP", "ALL" + branch);
         write.addLine("BELOW" + branch, "LAD", "GR1, #FFFF");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
+        output.addFile(write.getBuf());
         branch++;
     }
 
     public void lessThan() {
-        relateHelp();
+        Write write = relateHelp();
         write.addLine("JPL", "LESS" + branch);
         write.addLine("LAD", "GR1, #FFFF");
         write.addLine("JUMP", "ALL" + branch);
         write.addLine("LESS" + branch, "LAD", "GR1, #0000");
         write.addLine("ALL" + branch, "PUSH", "0, GR1");
+        output.addFile(write.getBuf());
         branch++;
     }
 
 
     public void pushNum(String variable) {
+        Write write = new Write();
         write.addLine("LD", "GR1, =" + variable);
         write.addLine("PUSH", "0, GR1");
+        output.addFile(write.getBuf());
     }
 
     public void push(String variable) {
+        Write write = new Write();
         write.addLine("PUSH", variable);
+        output.addFile(write.getBuf());
     }
 
-    private void calculateHelp() {
+    private Write calculateHelp() {
+        Write write = new Write();
         write.addLine("POP", "GR2");
         write.addLine("POP", "GR1");
+        return write;
     }
 
-    private void relateHelp() {
-        calculateHelp();
+    private Write relateHelp() {
+        Write write = calculateHelp();
         write.addLine("CPA", "GR1, GR2");
+        return write;
     }
-
-
 }

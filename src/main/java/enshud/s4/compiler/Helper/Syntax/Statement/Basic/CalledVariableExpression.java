@@ -24,6 +24,7 @@ public class CalledVariableExpression extends Core {
     Operator operator;
     Declared declared;
     public int val;
+    private Calculation calculation;
 
     private boolean allArray = false;
 
@@ -31,6 +32,7 @@ public class CalledVariableExpression extends Core {
         this.called = new Called(declared);
         this.operator = new Operator();
         this.declared = declared;
+        this.calculation = new Calculation();
     }
 
     public boolean getAllArray() {
@@ -94,7 +96,6 @@ public class CalledVariableExpression extends Core {
 
     public BufferedReader checkExpression(BufferedReader br) {
         /**式のcheck**/
-        Calculation calculation = new Calculation(new Write());
         br = checkSimpleExpression(br, calculation);
         int prev = val;
         while (hasOption(br, new Integer[]{24, 25, 26, 27, 28, 29})) {/**関係演算子**/
@@ -127,7 +128,6 @@ public class CalledVariableExpression extends Core {
             }
         }
         val = prev;
-        output.addFile(calculation.write.getBuf());
         return br;
     }
 
@@ -242,4 +242,5 @@ public class CalledVariableExpression extends Core {
         }
         return br;
     }
+
 }
