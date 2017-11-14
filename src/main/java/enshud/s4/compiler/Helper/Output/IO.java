@@ -40,7 +40,7 @@ public class IO {
             write.addLine("CALL", "WRTINT");
         }
         if (allArray) {
-            write.addLine("ADDA", "GR2, =1");
+            write.addLine("ADDA", "GR3, =1");
             write.addLine("JUMP", "ARRAY" + getArrayIndex());
             write.addLabel("EARRAY" + getArrayIndex());
             incArrayIndex();

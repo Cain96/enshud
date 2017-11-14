@@ -70,13 +70,13 @@ public class Variables {
                 if (array.getName().equals(variable)) {
                     int min = array.getMin();
                     int max = array.getMax();
-                    write.addLine("LD", "GR2, =0");
+                    write.addLine("LD", "GR3, =0");
                     write.addLabel("ARRAY" + arrayIndex);
-                    write.addLine("CPA", "GR2, " + (max - min));
-                    write.addLine("JPL", "EARRAY" + arrayIndex);
-                    write.addLine("LD", "GR3, =" + num);
-                    write.addLine("ADDA", "GR3, GR2");
-                    write.addLine("LD", "GR1, VAR, GR3");
+                    write.addLine("CPA", "GR3, =" + (max - min + 1));
+                    write.addLine("JZE", "EARRAY" + arrayIndex);
+                    write.addLine("LD", "GR4, =" + num);
+                    write.addLine("ADDA", "GR4, GR3");
+                    write.addLine("LD", "GR1, VAR, GR4");
                     write.addLine("PUSH", "0, GR1");
                     return;
                 }
