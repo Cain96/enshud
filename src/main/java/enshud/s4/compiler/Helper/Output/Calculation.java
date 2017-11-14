@@ -5,9 +5,6 @@ import static enshud.s4.compiler.Helper.FileRead.output;
 public class Calculation {
     static int branch = 0;
 
-    public Calculation() {
-    }
-
     public void minus(){
         Write write = new Write();
         write.addLine("POP", "GR1");

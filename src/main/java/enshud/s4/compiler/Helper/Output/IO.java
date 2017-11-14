@@ -57,6 +57,13 @@ public class IO {
         output.addFile(write.getBuf());
     }
 
+    public void pushChar(int index) {
+        Write write= new Write();
+        write.addLine("LD", "GR2, STR" + index);
+        write.addLine("PUSH", "0, GR2");
+        output.addFile(write.getBuf());
+    }
+
     public int getId() {
         return id;
     }

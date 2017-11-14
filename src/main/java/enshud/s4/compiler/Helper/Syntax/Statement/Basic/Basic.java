@@ -94,9 +94,6 @@ public class Basic extends Core {
                     System.err.println("Semantic error: line " + lineNumber);
                     return null;
                 }
-                if (prev == 4){
-                    variables.changeChar();
-                }
                 variables.store(variableName, isArray);
             } else {
                 variables.callFunction(variableName);

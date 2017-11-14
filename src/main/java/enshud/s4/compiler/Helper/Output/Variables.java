@@ -30,12 +30,6 @@ public class Variables {
         arrayIndex++;
     }
 
-    public void changeChar() {
-        write.addLine("POP", "GR3");
-        write.addLine("LD", "GR2, 0, GR3");
-        write.addLine("PUSH", "0, GR2");
-    }
-
     public void store(String variable, boolean isArray) {
         write.addLine("POP", "GR1");
         int num = getVariableIndex(variable);

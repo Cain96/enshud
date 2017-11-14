@@ -215,9 +215,15 @@ public class CalledVariableExpression extends Core {
                 calculation.pushNum(string);
                 val = 11;
             } else if (id == 45) {
-                io.setId(id);
                 end.addString(string);
-                io.pushString(string.length() - 2, end.getI() - 1);
+                int length = string.length() - 2;
+                if (length > 1) {
+                    io.setId(id);
+                    io.pushString(length, end.getI() - 1);
+                } else {
+                    io.setId(4);
+                    io.pushChar(end.getI() - 1);
+                }
                 val = 4;
             } else if (id == 20) {
                 calculation.push("#0000");
