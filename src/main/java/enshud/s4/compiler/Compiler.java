@@ -1,5 +1,6 @@
 package enshud.s4.compiler;
 
+import enshud.casl.CaslSimulator;
 import enshud.s4.compiler.Helper.FileRead;
 
 public class Compiler {
@@ -12,7 +13,7 @@ public class Compiler {
 		new Compiler().run("data/ts/normal04.ts", "tmp/out.cas");
 		
 		// CaslSimulatorクラスを使ってコンパイルしたcasを，CASLアセンブラ & COMETシミュレータで実行する
-		//CaslSimulator.run("tmp/out.cas", "tmp/out.ans", "36", "48");
+		CaslSimulator.run("tmp/out.cas", "tmp/out.ans", "36", "48");
 	}
 
 	/**

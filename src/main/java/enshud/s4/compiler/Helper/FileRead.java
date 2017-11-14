@@ -31,7 +31,6 @@ public class FileRead {
             if (br != null) {
                 br.close();
                 fr.close();
-                System.out.println("OK");
             }
             output.closeFile();
             CaslSimulator.appendLibcas(outputFileName);
