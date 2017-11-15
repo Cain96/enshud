@@ -101,9 +101,11 @@ public class CalledVariableExpression extends Core {
         while (hasOption(br, new Integer[]{24, 25, 26, 27, 28, 29})) {/**関係演算子**/
             br = idCheck(br, new Integer[]{24, 25, 26, 27, 28, 29});
             int mid = id;
+            int line = lineNumber;
             br = checkSimpleExpression(br, calculation);
             int follow = val;
             if ((prev = operator.check(prev, mid, follow)) < 0) {
+                System.err.println("Semantic error: line " + line);
                 return null;
             }
             switch (mid) {
@@ -149,9 +151,11 @@ public class CalledVariableExpression extends Core {
         while (hasOption(br, new Integer[]{15, 30, 31})) {/**加法演算子**/
             br = idCheck(br, new Integer[]{15, 30, 31});
             int mid = id;
+            int line = lineNumber;
             br = checkTerm(br, calculation);
             int follow = val;
             if ((prev = operator.check(prev, mid, follow)) < 0) {
+                System.err.println("Semantic error: line " + line);
                 return null;
             }
             switch (mid) {
@@ -177,9 +181,11 @@ public class CalledVariableExpression extends Core {
         while (hasOption(br, new Integer[]{0, 5, 12, 32})) {/**乗法演算子**/
             br = idCheck(br, new Integer[]{0, 5, 12, 32});
             int mid = id;
+            int line = lineNumber;
             br = checkFactor(br, calculation);
             int follow = val;
             if ((prev = operator.check(prev, mid, follow)) < 0) {
+                System.err.println("Semantic error: line " + line);
                 return null;
             }
             switch (mid) {

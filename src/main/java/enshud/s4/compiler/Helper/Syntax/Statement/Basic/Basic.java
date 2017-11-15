@@ -90,7 +90,7 @@ public class Basic extends Core {
                 int mid = id;
                 br = calledVariableExpression.checkExpression(br);
                 int follow = calledVariableExpression.val;
-                if (calledVariableExpression.operator.check(prev, mid, follow) < 0) {
+                if (calledVariableExpression.operator.check(prev, mid, follow) < 0 && br != null) {
                     System.err.println("Semantic error: line " + lineNumber);
                     return null;
                 }

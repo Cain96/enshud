@@ -44,7 +44,7 @@ public class Compound extends Core {
                 /**if分のcheck**/
                 br = idCheck(br, 10);
                 br = basic.calledVariableExpression.checkExpression(br);
-                if (!expression.checkBool(basic.calledVariableExpression.val)) {
+                if (!expression.checkBool(basic.calledVariableExpression.val) && br != null) {
                     System.err.println("Semantic error: line " + lineNumber);
                     return null;
                 }
