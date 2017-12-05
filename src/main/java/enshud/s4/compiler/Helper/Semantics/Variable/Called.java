@@ -35,15 +35,8 @@ public class Called {
                 }
             }
         }
-        for (Map.Entry<String, LinkedHashMap<String, Integer>> entry : declaredFunctions.entrySet()) {
-            if (entry.getKey().equals(variable)) {
-                return 43;
-            }
-            for (Map.Entry<String, Integer> variableEntry : entry.getValue().entrySet()) {
-                if (variableEntry.getKey().equals(variable)) {
-                    return variableEntry.getValue();
-                }
-            }
+        if (declaredFunctions.keySet().contains(variable)) {
+            return 43;
         }
         System.err.println("Semantic error: line " + lineNumber);
         return -1;
