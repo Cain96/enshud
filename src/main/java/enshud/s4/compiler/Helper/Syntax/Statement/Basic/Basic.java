@@ -43,60 +43,70 @@ public class Basic extends Core {
             br = calledVariableExpression.checkAssignedVariable(br, variableName, variableLine);
             boolean isArray = calledVariableExpression.called.isArray;
 
-            if (hasOption(br, 33)) {
-                /**手続き呼び出し文のオプションcheck**/
-                Iterator<Map.Entry<String, Integer>> functionIterator = declared.declaredFunctions.get(variableName).entrySet().iterator();
-                ArrayList<Argument> arguments = new ArrayList<>();
-                write.addLabel(";========== Function ===========");
-                br = idCheck(br, 33);
-                br = calledVariableExpression.checkExpression(br);
-                if (functionIterator.hasNext()) {
-                    Map.Entry functionEntry = functionIterator.next();
-                    if ((Integer)functionEntry.getValue() != calledVariableExpression.val){
-                        System.err.println("Semantic error: line " + lineNumber);
-                        return null;
-                    }
-                    arguments.add(new Argument((String)functionEntry.getKey(), isArray));
-                } else {
-                    System.err.println("Semantic error: line " + lineNumber);
-                    return null;
-                }
-                while (hasOption(br, 41)) {
-                    br = idCheck(br, 41);
+            if (br != null) {
+                if (hasOption(br, 33)) {
+                    /**手続き呼び出し文のオプションcheck**/
+                    Iterator<Map.Entry<String, Integer>> functionIterator = declared.declaredFunctions.get(variableName).entrySet().iterator();
+                    ArrayList<Argument> arguments = new ArrayList<>();
+                    write.addLabel(";========== Function ===========");
+                    br = idCheck(br, 33);
                     br = calledVariableExpression.checkExpression(br);
                     if (functionIterator.hasNext()) {
                         Map.Entry functionEntry = functionIterator.next();
-                        if ((Integer)functionEntry.getValue() != calledVariableExpression.val){
+                        if ((Integer) functionEntry.getValue() != calledVariableExpression.val) {
                             System.err.println("Semantic error: line " + lineNumber);
                             return null;
                         }
-                        arguments.add(new Argument((String)functionEntry.getKey(), isArray));
+                        arguments.add(new Argument((String) functionEntry.getKey(), isArray));
                     } else {
                         System.err.println("Semantic error: line " + lineNumber);
                         return null;
                     }
+                    while (hasOption(br, 41)) {
+                        br = idCheck(br, 41);
+                        br = calledVariableExpression.checkExpression(br);
+                        if (functionIterator.hasNext()) {
+                            Map.Entry functionEntry = functionIterator.next();
+                            if ((Integer) functionEntry.getValue() != calledVariableExpression.val) {
+                                System.err.println("Semantic error: line " + lineNumber);
+                                return null;
+                            }
+                            arguments.add(new Argument((String) functionEntry.getKey(), isArray));
+                        } else {
+                            System.err.println("Semantic error: line " + lineNumber);
+                            return null;
+                        }
+                    }
+                    if (functionIterator.hasNext()){
+                        System.err.println("Semantic error: line " + lineNumber);
+                        return null;
+                    }
+                    Collections.reverse(arguments);
+                    /** 逆順にpushされるので、その対策 **/
+                    for (Argument argument : arguments) {
+                        variables.store(argument.getName(), argument.isArray(), functionHash.get(variableName).getDeclared());
+                    }
+                    br = idCheck(br, 34);
+                    variables.callFunction(variableName);
+                } else if (hasOption(br, 40)) {
+                    /**代入文のcheck**/
+                    int prev = calledVariableExpression.val;
+                    br = idCheck(br, 40);
+                    int mid = id;
+                    br = calledVariableExpression.checkExpression(br);
+                    int follow = calledVariableExpression.val;
+                    if (calledVariableExpression.operator.check(prev, mid, follow) < 0 && br != null) {
+                        System.err.println("Semantic error: line " + lineNumber);
+                        return null;
+                    }
+                    variables.store(variableName, isArray);
+                } else {
+                    if (declared.declaredFunctions.containsKey(variableName) && declared.declaredFunctions.get(variableName).size() != 0) {
+                        System.err.println("Semantic error: line " + variableLine);
+                        return null;
+                    }
+                    variables.callFunction(variableName);
                 }
-                Collections.reverse(arguments);
-                /** 逆順にpushされるので、その対策 **/
-                for (Argument argument : arguments){
-                    variables.store(argument.getName(), argument.isArray(), functionHash.get(variableName).getDeclared());
-                }
-                br = idCheck(br, 34);
-                variables.callFunction(variableName);
-            } else if (hasOption(br, 40)) {
-                /**代入文のcheck**/
-                int prev = calledVariableExpression.val;
-                br = idCheck(br, 40);
-                int mid = id;
-                br = calledVariableExpression.checkExpression(br);
-                int follow = calledVariableExpression.val;
-                if (calledVariableExpression.operator.check(prev, mid, follow) < 0 && br != null) {
-                    System.err.println("Semantic error: line " + lineNumber);
-                    return null;
-                }
-                variables.store(variableName, isArray);
-            } else {
-                variables.callFunction(variableName);
             }
         } else if (hasOption(br, 18)) {
             /**入力文のcheck**/

@@ -286,6 +286,36 @@ public class CompilerTest {
 		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 27");
 	}
 
+	@Test
+	public void testSemerr14() {
+		new Compiler().run("data/ts/semerr14.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr15() {
+		new Compiler().run("data/ts/semerr15.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr16() {
+		new Compiler().run("data/ts/semerr16.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr17() {
+		new Compiler().run("data/ts/semerr17.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr18() {
+		new Compiler().run("data/ts/semerr18.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 36");
+	}
+
 	////////////////////////////////////////////////////////////////////////////////
 
 	/**
