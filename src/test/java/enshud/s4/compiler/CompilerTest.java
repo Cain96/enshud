@@ -206,6 +206,12 @@ public class CompilerTest {
 		assertThat(err.toString().trim()).isEqualTo("Syntax error: line 31");
 	}
 
+	@Test
+	public void testSynerr09() {
+		new Compiler().run("data/ts/synerr09.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Syntax error: line 4");
+	}
+
 	////////////////////////////////////////////////////////////////////////////////
 
 	@Test
