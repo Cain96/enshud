@@ -144,7 +144,7 @@ public class CalledVariableExpression extends Core {
             }
         }
         br = checkTerm(br, calculation);
-        if (minus){
+        if (minus) {
             calculation.minus();
         }
         int prev = val;
@@ -217,6 +217,11 @@ public class CalledVariableExpression extends Core {
             /**定数**/
             br = idCheck(br, new Integer[]{9, 20, 44, 45});
             if (id == 44) {
+                int num = Integer.parseInt(string);
+                if (num < -32768 || num > 32767) {
+                    System.err.println("Semantic error: line " + lineNumber);
+                    return null;
+                }
                 io.setId(id);
                 calculation.pushNum(string);
                 val = 11;
