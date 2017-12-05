@@ -26,9 +26,9 @@ begin
     i := 0;
     while i < 10 do
     begin
+        i := i < debug   { <<<< sematic error here }
         i := i + 1;
         a[i] := i * i;
-        i := i + 1 and i   { <<<< sematic error here }
         begin
             if debug = true then begin writeln('[', msg, '] i=', i) end
         end
