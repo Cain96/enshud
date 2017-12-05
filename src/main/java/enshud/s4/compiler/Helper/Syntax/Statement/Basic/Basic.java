@@ -146,9 +146,6 @@ public class Basic extends Core {
             Compound cs = new Compound(declared);
             br = cs.checkCompoundStatement(br);
             return br;
-        } else if (br != null) {
-            System.err.println("Syntax error: line " + lineNumber);
-            return null;
         }
         /**複合文以外の基本文を書き込み**/
         output.addFile(write.getBuf());
