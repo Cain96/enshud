@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class CompilerTest {
+public class CompilerTestExtend {
 	@Rule
 	public final Timeout globalTimeout = Timeout.seconds(10);
 	@Rule
@@ -206,6 +206,12 @@ public class CompilerTest {
 		assertThat(err.toString().trim()).isEqualTo("Syntax error: line 31");
 	}
 
+	@Test
+	public void testSynerr09() {
+		new Compiler().run("data/ts/synerr09.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Syntax error: line 4");
+	}
+
 	////////////////////////////////////////////////////////////////////////////////
 
 	@Test
@@ -254,6 +260,78 @@ public class CompilerTest {
 	public void testSemerr08() {
 		new Compiler().run("data/ts/semerr08.ts", TMP_OUT_CAS);
 		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 34");
+	}
+
+	@Test
+	public void testSemerr09() {
+		new Compiler().run("data/ts/semerr09.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 31");
+	}
+
+	@Test
+	public void testSemerr10() {
+		new Compiler().run("data/ts/semerr10.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 29");
+	}
+
+	@Test
+	public void testSemerr11() {
+		new Compiler().run("data/ts/semerr11.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr12() {
+		new Compiler().run("data/ts/semerr12.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 29");
+	}
+
+	@Test
+	public void testSemerr13() {
+		new Compiler().run("data/ts/semerr13.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 27");
+	}
+
+	@Test
+	public void testSemerr14() {
+		new Compiler().run("data/ts/semerr14.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr15() {
+		new Compiler().run("data/ts/semerr15.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr16() {
+		new Compiler().run("data/ts/semerr16.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr17() {
+		new Compiler().run("data/ts/semerr17.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 22");
+	}
+
+	@Test
+	public void testSemerr18() {
+		new Compiler().run("data/ts/semerr18.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 36");
+	}
+
+	@Test
+	public void testSemerr19() {
+		new Compiler().run("data/ts/semerr19.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 30");
+	}
+
+	@Test
+	public void testSemerr20() {
+		new Compiler().run("data/ts/semerr20.ts", TMP_OUT_CAS);
+		assertThat(err.toString().trim()).isEqualTo("Semantic error: line 30");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////
